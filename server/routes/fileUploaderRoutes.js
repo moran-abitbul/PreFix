@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router()
 const multer = require('multer');
-
 const PresentationModel = require('../models/PresentationModel')
 
 router.use(function (req, res, next) {
@@ -23,7 +22,7 @@ const upload = multer({ storage }).single('file');
 
 //End point to save this data
 //Create and send data to server
-router. 
+router.
     route('/')
     .post((req, res) => {
         upload(req, res, (err) => {
@@ -44,7 +43,7 @@ router.
                 newPresentation.save()
                     .then(() => res.send('successfully uploaded'))
                     .catch(err => console.log(err))
-                    
+
                 //res.send("Single file upload success");
             }
         })
