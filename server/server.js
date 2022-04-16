@@ -21,10 +21,9 @@ mongoose.connect(dbConfig, {
 })
 
 //routers
-const selectChangeRoutes = require('./routes/selectChangeRoutes');
+//const selectChangeRoutes = require('./routes/selectChangeRoutes');
 const fileUploaderRoutes = require('./routes/fileUploaderRoutes');
-//const showChangeRoutes = require('./routes/showChangeRoutes')
-
+const showChangeRoutes = require('./routes/showChangeRoutes')
 
 
 //use
@@ -38,8 +37,8 @@ app.use(bodyParser.json());
 //Routes
 
 app.use('/upload', fileUploaderRoutes);
-app.use('/selectChange', selectChangeRoutes);
-//app.use('./showChange', showChangeRoutes);
+//app.use('/upload/selectChange', selectChangeRoutes);
+app.use('/showChange', showChangeRoutes);
 
 
 
@@ -49,7 +48,10 @@ app.listen(8000, () => {
 });
 
 
-
+app.get("/", (req, res) => {
+    //handle root
+    res.render("hello root");
+});
 
 
 
@@ -70,10 +72,7 @@ app.listen(8000, () => {
 //load.load(app);
 
 
-// app.get("/", (req, res) => {
-//     //handle root
-//     res.send("hello root");
-// });
+
 
 
 

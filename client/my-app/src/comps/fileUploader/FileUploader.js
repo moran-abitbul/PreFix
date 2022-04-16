@@ -4,12 +4,13 @@ import './style.css';
 import { useHistory } from 'react-router-dom';
 
 
-export const FileUploader = () => {
+export const FileUploader = ({ setPicArray }) => {
     const history = useHistory();
 
     console.clear();
     //Null- there is no file
     const [file, setFile] = useState(null);
+
 
     const onInputChange = (e) => {
 
@@ -20,25 +21,26 @@ export const FileUploader = () => {
     const OnSubmit = (e) => {
         e.preventDefault();
         //e.stopPropagation();
-
         const data = new FormData();
 
         data.append('file', file);
 
         axios.post('//localhost:8000/upload', data)
-            .then((e) => { // res = e
-                //console.log(e)
-                history.push("/selectChange");
+            .then(res => {
+                // res = the picArray from the server (fileNameArray)
+                setPicArray(res)
 
-                //console.log("success!")                                
+                history.push("/showChange");
             })
             .catch((e) => {
                 console.error('Error', e)
             })
     };
 
+
     return (
         <div className="file">
+
             <form method="POST" action="#" id="#" onSubmit={OnSubmit}>
                 <div className="form-group files">
                     <h2>Upload Your File</h2>

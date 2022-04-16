@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router()
 const multer = require('multer');
+const picName = require('../getArrayPicName')
+
+//const startVisually = require('../visuals/exportDataFromPre');
+const picArray = require('../picAPI');
 
 const PresentationModel = require('../models/PresentationModel')
 
@@ -13,8 +17,8 @@ router.use(function (req, res, next) {
 const storage = multer.diskStorage({
     destination: 'uploads',
     filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname)
-        //cb(null, file.originalname)
+        //cb(null, Date.now() + '-' + file.originalname)
+        cb(null, file.originalname)
     }
 });
 
@@ -23,8 +27,8 @@ const upload = multer({ storage }).single('file');
 
 //End point to save this data
 //Create and send data to server
-router. 
-    route('/')
+router
+    .route('/')
     .post((req, res) => {
         upload(req, res, (err) => {
             if (err) {
@@ -32,8 +36,6 @@ router.
                 return res.status(500).json(err)
             }
             else {
-                //return res.status(200).send(req.file)
-                //console.log(req.file)
                 const newPresentation = new PresentationModel({
                     name: req.file.originalname,
                     file: {
@@ -41,17 +43,61 @@ router.
                         contentType: 'pptx'
                     }
                 })
-                newPresentation.save()
-                    .then(() => res.send('successfully uploaded'))
-                    .catch(err => console.log(err))
-                    
-                //res.send("Single file upload success");
+
+                //newFile = startVisually.func().....
+                //choose additional properties of the file for send front/change name of some arrays
+
+
+                const getArrayOfPicNames = async (fileName) => {
+                    return await new Promise((resolve) => {
+                        picName.getArray(fileName).then(array => {
+                            resolve(array);
+                        })
+                    })
+                }
+
+                const saveAndSend = async () => {
+
+                    //Run this codeeeeeeeeeeeeeeeee
+
+                    // const arrayOfPicNames = await getArrayOfPicNames(req.file.filename).then((array) => {
+                    //     return array;
+                    // })
+                    const arrayOfPicNames = [1, 2]
+
+                    newPresentation.save()
+                        //.then(() => res.send('successfully uploaded'))
+                        .then(() => res.send(arrayOfPicNames))
+                        .catch(err => console.log(err))
+                    //res.send("Single file upload success");
+                    //return res.status(200).send(req.file)
+                }
+
+                saveAndSend();
             }
         })
-    });
+    })
+// .get((req, res) => {
+//     PresentationModel.find(function (err, res) {
+//         if (err) {
+//             console.log(err);
+//         }
+//         else {
+//             console.log(res)
+//         }
+//     })
+// });
+
+
+
+
+
+
+
+
 
 // router
-//     .route("/fileUploader")
+//     .route("/f ileUploader")
 //     .get((req, res) => {
 //         res.send("hi get /fileUploader" + req.params);
 //     })
