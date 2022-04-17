@@ -7,14 +7,13 @@ router.use(function (req, res, next) {
 });
 
 
-router.
-    route('/') // Home = selectChange
-    .get((req, res) => {
-        //res.json({ name: "Tair" });
-        console.log('get request from browser' + req.url)
+// router.
+//     route('/') // Home = selectChange
+//     .get((req, res) => {
+//         //res.json({ name: "Tair" });
+//         console.log('get request from browser' + req.url)
+//         res.status(200).json({ massage: "Send array of slides to the browser", status: 200 });
+//     });
 
-        res.status(200).json({ massage: "Send array of slides to the browser", status: 200 });
-    });
 
-
-module.exports = router;
+// module.exports = router;

@@ -3,7 +3,7 @@
         "dbConfig": {
             "host": "localhost",
             "port": 5984,
-            "dbName": "mongodb+srv://prefixdb:eSr9prDHLKyHdk66@cluster0.ywads.mongodb.net/PreFixdb?retryWrites=true&w=majority"
+            "dbName": "mongodb+srv://prefixdb:ZOKls1GJdH1HQC25@cluster0.ywads.mongodb.net/PreFixdb?retryWrites=true&w=majority"
         }
     }
 }

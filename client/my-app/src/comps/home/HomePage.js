@@ -38,7 +38,7 @@ function HomePage() {
             </FormGroup>
 
 
-            <Link to="/fileUploader">
+            <Link to="/selectChange">
                 <Stack spacing={2} direction="row">
                     <Button variant="contained">Start</Button>
                 </Stack>
