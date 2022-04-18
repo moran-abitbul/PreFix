@@ -9,14 +9,17 @@ sentence = 'In mathematics and computer science, an algorithm  is a finite seque
 # Tokenize and tag some text:
 print('tokenize:')
 tokens = nltk.word_tokenize(sentence)
+print('tokens: ')
 print(tokens)
 
 # part of speech
 tagged = nltk.pos_tag(tokens)
+print('tagged[0:6]: ')
 print(tagged[0:6])
 
 # Identify named entities:
 entities = nltk.chunk.ne_chunk(tagged)
+print('entities: ')
 print(entities)
 
 

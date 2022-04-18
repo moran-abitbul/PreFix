@@ -1,6 +1,9 @@
 {
     "cSpell.words": [
+        "cloudconvert",
+        "colorbackground",
         "nltk",
         "PREFIXDB"
-    ]
+    ],
+    "files.autoSave": "afterDelay"
 }
