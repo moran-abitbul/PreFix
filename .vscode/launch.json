@@ -5,16 +5,24 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
             "type": "pwa-node",
             "request": "launch",
             "name": "Launch Program",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\server\\visuals\\updateVisualSlide.js"
+            //"program": "${workspaceFolder}\\server\\visuals\\updateVisualSlide.js"
             //"program": "${workspaceFolder}\\server\\picAPI.js"
             //"program": "${workspaceFolder}\\server\\routes\\fileUploaderRoutes.js"
-            //"program": "${workspaceFolder}\\server\\server.js"
+            "program": "${workspaceFolder}\\server\\server.js"
         }
     ]
 }
