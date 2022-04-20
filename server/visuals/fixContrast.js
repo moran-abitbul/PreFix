@@ -5,6 +5,7 @@ colorArr = new Array();
 
 //check the contrast with the data from api and lightness if we need
 const checkContrast = async (background, textColor) => {
+    console.log("get colors: " +  " background: " + background + " textColor: " + textColor);
     let dataJson = await color.getData(background, textColor); //accept data from api contrast
     let ratio = dataJson['ratio'];
     return await new Promise((resolve) => {
