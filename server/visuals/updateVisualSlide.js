@@ -5,14 +5,17 @@ const PPTX = require('er-nodejs-pptx');
 
 let pptx = new PPTX.Composer();
 
+const path = require('path');
+const filePath = path.join(__dirname, '../uploads/example project.pptx');
+
 
 const printXml = async () => {
-    const pre = await pptx.load('semi.pptx');
+    const pre = await pptx.load(filePath);
     // var xmlDataSlide = pre.getSlide(4).getSlideXmlAsString();
     // console.log(xmlDataSlide);
     arr = pre.getSlide(1).getArrText();
     console.log(arr[0]);
-   // console.log(arr[1]);
+    // console.log(arr[1]);
 
 }
 

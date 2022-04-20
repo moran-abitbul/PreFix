@@ -85,7 +85,6 @@ function ShowChange({ picArray }) {
 
         </div >
     );
-
 };
 
 export default ShowChange;

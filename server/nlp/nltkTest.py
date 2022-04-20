@@ -7,7 +7,6 @@ sentence = 'In mathematics and computer science, an algorithm  is a finite seque
 
 
 # Tokenize and tag some text:
-print('tokenize:')
 tokens = nltk.word_tokenize(sentence)
 print('tokens: ')
 print(tokens)

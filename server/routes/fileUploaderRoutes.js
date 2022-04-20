@@ -3,7 +3,7 @@ const router = express.Router()
 const multer = require('multer');
 const picName = require('../getArrayPicName')
 
-//const startVisually = require('../visuals/exportDataFromPre');
+const startVisually = require('../visuals/updateVisualSlide');
 const picArray = require('../picAPI');
 
 const PresentationModel = require('../models/PresentationModel')
@@ -44,10 +44,6 @@ router
                     }
                 })
 
-                //newFile = startVisually.func().....
-                //choose additional properties of the file for send front/change name of some arrays
-
-
                 const getArrayOfPicNames = async (fileName) => {
                     return await new Promise((resolve) => {
                         picName.getArray(fileName).then(array => {
@@ -60,10 +56,19 @@ router
 
                     //Run this codeeeeeeeeeeeeeeeee
 
-                    // const arrayOfPicNames = await getArrayOfPicNames(req.file.filename).then((array) => {
+                    // const arrayOfPicNamesBefore = await getArrayOfPicNames(req.file.filename).then((array) => {
                     //     return array;
                     // })
                     const arrayOfPicNames = [1, 2]
+
+
+                    //send the file to edit and get new file
+                    newFileName = startVisually.func(req.file.filename).then(fileName => {return fileName;})
+                    //choose additional properties of the file for send front/change name of some arrays
+
+                    // const arrayOfPicNamesAfter = await getArrayOfPicNames(newFileName).then((array) => {
+                    //     return array;
+                    // })
 
                     newPresentation.save()
                         //.then(() => res.send('successfully uploaded'))
@@ -77,6 +82,22 @@ router
             }
         })
     })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // .get((req, res) => {
 //     PresentationModel.find(function (err, res) {
 //         if (err) {
@@ -87,11 +108,6 @@ router
 //         }
 //     })
 // });
-
-
-
-
-
 
 
 
