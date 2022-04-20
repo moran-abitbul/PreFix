@@ -6,7 +6,7 @@ const numberToDarken = '050505'
 const Darken = (color) => {
 
     // newColor = ColorMath.evaluate("(#" + color + " - #" + numberToDarken + ") ").resultStr;
-    let newColor = ColorMath.evaluate('#' + color + ' <<< 10%').resultStr
+    let newColor = ColorMath.evaluate('#' + color + ' <<< 30%').resultStr
     try{
         return newColor.substring(1, newColor.length);
     } catch (e){
@@ -21,7 +21,7 @@ const Lightness = (color) => {
         color = "212121"; //Lightness black color
     }
     //let newColor = ColorMath.evaluate("(#" + color + " + #" + numberToLightness + ") ").resultStr;
-    let newColor = ColorMath.evaluate('#' + color + ' >>> 30%').resultStr
+    let newColor = ColorMath.evaluate('#' + color + ' >>> 20%').resultStr
     try{
         return newColor.substring(1, newColor.length);
     } catch (e){
