@@ -1,12 +1,11 @@
 const updatePres = require('./visuals/updateVisualSlide');
 
-const getNameUpdated =  async (fileName) => {
+const getNameUpdated = async (fileName) => {
     return await new Promise((resolve) => {
-        let fileNameSave = await updatePres.start(fileName);
-        console.log(fileNameSave);
+        let fileNameSave = updatePres.start(fileName);
         resolve(fileNameSave);
     })
 
 }
 
-module.exports = {getNameUpdated}
+module.exports = { getNameUpdated }

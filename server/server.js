@@ -33,14 +33,9 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
-//use the clientRoutes.js file to handle
-//endpoints that start witt /clientRoutes
-//Routes
-
 app.use('/upload', fileUploaderRoutes);
 //app.use('/upload/selectChange', selectChangeRoutes);
 app.use('/showChange', showChangeRoutes);
-
 
 
 // Server listen   
@@ -53,41 +48,3 @@ app.get("/", (req, res) => {
     //handle root
     res.render("hello root");
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//const load = require('./helpServer');
-
-//load.load(app);
-
-
-
-
-
-
-
-
-// For the COLORS in the presentation
-
-// const fcolor = '123456';
-// const bcolor = '123456';
-// axios
-//     .get('https://webaim.org/resources/contrastchecker/?fcolor=666666&bcolor=FFFFFF&api')
-//     .then(res => {
-//         console.log(res);
-//     })
-//     .catch(error => {
-//         console.error(error)
-//     });

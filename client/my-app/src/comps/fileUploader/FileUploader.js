@@ -27,8 +27,8 @@ export const FileUploader = ({ setPicArray }) => {
 
         axios.post('//localhost:8000/upload', data)
             .then(res => {
-                // res = the picArray from the server (fileNameArray)
-                setPicArray(res)
+                // res.data = the picArray from the server (fileNameArray)
+                setPicArray(res.data)
 
                 history.push("/showChange");
             })

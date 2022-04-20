@@ -16,7 +16,7 @@ const start = async (fileName) => {
     const pre = await pptx.load(filePath);
 
     //go through all the slides
-    for (let i = 1; i < 8; i++) {
+    for (let i = 1; i < 2; i++) {
         console.log('start with slide - ' + i);
         var newColorText = new Array();
 

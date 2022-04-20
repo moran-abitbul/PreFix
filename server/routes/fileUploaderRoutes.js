@@ -54,30 +54,26 @@ router
 
                 const saveAndSend = async () => {
 
-                    //Run this codeeeeeeeeeeeeeeeee
-
+                    //get the original pic array before change
                     // const arrayOfPicNamesBefore = await getArrayOfPicNames(req.file.filename).then((array) => {
                     //     return array;
-                    // })
-                    const arrayOfPicNames = [1, 2]
+                    // })                    
 
 
-                    //send the file to edit and get new file
-                    let fileNameSaved = presData.getNameUpdated(req.file.filename).then((name) => {
+                    //send the file name to edit and get new file name
+                    let fileNameSaved = await presData.getNameUpdated(req.file.filename).then((name) => {
                         return name;
                     })
 
 
-                    console.log(fileNameSaved);
-                    //choose additional properties of the file for send front/change name of some arrays
+                    const arrayOfPicNamesAfter = await getArrayOfPicNames(fileNameSaved).then((array) => {
+                        return array;
+                    })
 
-                    // const arrayOfPicNamesAfter = await getArrayOfPicNames(newFileName).then((array) => {
-                    //     return array;
-                    // })
-
+                    //save presentation to db
                     newPresentation.save()
                         //.then(() => res.send('successfully uploaded'))
-                        .then(() => res.send(arrayOfPicNames))
+                        .then(() => res.send(arrayOfPicNamesAfter))
                         .catch(err => console.log(err))
                     //res.send("Single file upload success");
                     //return res.status(200).send(req.file)
