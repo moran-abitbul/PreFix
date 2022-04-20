@@ -3,7 +3,7 @@ const router = express.Router()
 const multer = require('multer');
 const picName = require('../getArrayPicName')
 
-const startVisually = require('../visuals/updateVisualSlide');
+const presData = require('../getPresDate');
 const picArray = require('../picAPI');
 
 const PresentationModel = require('../models/PresentationModel')
@@ -63,7 +63,12 @@ router
 
 
                     //send the file to edit and get new file
-                    newFileName = startVisually.func(req.file.filename).then(fileName => {return fileName;})
+                    let fileNameSaved = presData.getNameUpdated(req.file.filename).then((name) => {
+                        return name;
+                    })
+
+
+                    console.log(fileNameSaved);
                     //choose additional properties of the file for send front/change name of some arrays
 
                     // const arrayOfPicNamesAfter = await getArrayOfPicNames(newFileName).then((array) => {

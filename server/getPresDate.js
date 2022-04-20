@@ -1,9 +1,12 @@
 const updatePres = require('./visuals/updateVisualSlide');
 
-const func = async (fileName) => {
-    let fileNameSave = await updatePres.start(fileName); 
-    console.log(fileNameSave);
-}
- 
+const getNameUpdated =  async (fileName) => {
+    return await new Promise((resolve) => {
+        let fileNameSave = await updatePres.start(fileName);
+        console.log(fileNameSave);
+        resolve(fileNameSave);
+    })
 
-func('semi.pptx');
+}
+
+module.exports = {getNameUpdated}
