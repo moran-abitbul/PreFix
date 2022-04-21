@@ -1,7 +1,7 @@
 const axios = require('axios')
 
-//get data from api to test for contrast
 const getImageFromText = (q, tbs) => {
+
     var api_key = 'f09834b970abc1d46e74ddcf046cb41dde0a4feef039268388ae5cd24a3d9746'
 
     console.log("q: " + q + ", tbs:" + tbs);
@@ -13,6 +13,7 @@ const getImageFromText = (q, tbs) => {
                 .then(res => {
                     picDataArray = res.data.images_results
                     resolve(res.data.images_results[0].original)
+
                     // titleArr = []
                     // originalArr = []
 
@@ -29,6 +30,7 @@ const getImageFromText = (q, tbs) => {
         }
     })
 }
+
 
 module.exports = { getImageFromText };
 

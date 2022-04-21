@@ -5,7 +5,6 @@ const getNameUpdated = async (fileName) => {
         let fileNameSave = updatePres.start(fileName);
         resolve(fileNameSave);
     })
-
 }
 
 module.exports = { getNameUpdated }
