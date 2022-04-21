@@ -12,6 +12,7 @@ function App() {
 
   //like global state
   const [picArray, setPicArray] = useState();
+  //const [picArrayAfterChange, setPicArrayAfterChange] = useState();
 
 
   return (
