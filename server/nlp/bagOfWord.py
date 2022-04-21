@@ -9,15 +9,14 @@ from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem import PorterStemmer
 
-
 import sys
 import json
 
 # def bagOfWords():
 
-#text = str(sys.argv[1])
+text = str(sys.argv[1])
 
-text = sys.stdin.readline()
+#text = sys.stdin.readline()
 
 # preprocess the data
 
@@ -110,8 +109,7 @@ freq_words = heapq.nlargest(3, word2count, key=word2count.get)
 
 
 # convert freq_words to string
-listToStr = ' '.join([str(elem) for elem in freq_words])
+freq_words_str = ' '.join([str(elem) for elem in freq_words])
 
-print(json.loads(listToStr))
-
+print(freq_words_str)
 #bagOfWords('Data Set: Data For Learning, Examples – with or without “results” Occam’s Razor: prefer a simple model if possible')

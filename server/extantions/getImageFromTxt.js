@@ -31,7 +31,7 @@ const getImageFromText = (q, tbs) => {
     })
 }
 
-
+//getImageFromText('data learn exampl', 'Data Set').then((url) => { console.log(url); })
 module.exports = { getImageFromText };
 
 

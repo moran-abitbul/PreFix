@@ -2,8 +2,7 @@ const fix = require('./fixContrast');
 const PPTX = require('er-nodejs-pptx');
 const changeString = require('./changeStringToBullet');
 const path = require('path');
-const extension = require('../extantions/getImageFromTxt')
-
+const extantion = require('../extantions/getPicFromText')
 
 
 let pptx = new PPTX.Composer();
@@ -38,10 +37,14 @@ const start = async (fileName) => {
             for (text of textArray[0]) {
                 textSlide += text.join(' ')
             }
-            //add send to pic function
+
+            //get pic url from API
+            picUrl = extantion.getPicFromText(textSlide, 'title').then((url) => {
+                return (url.toString('utf8'))
+            })
+            pre.getSlide(i).addImage(picUrl);
+
             counterWithoutPic = 0;
-            url = ''
-            pre.getSlide(i).addImage(url);
         }
 
         //original background color
