@@ -2,6 +2,7 @@ const fix = require('./fixContrast');
 const PPTX = require('er-nodejs-pptx');
 const changeString = require('./changeStringToBullet');
 const path = require('path');
+const extension = require('../extantions/getImageFromTxt')
 
 
 
@@ -19,6 +20,10 @@ const start = async (fileName) => {
     for (let i = 1; i < 2; i++) {
         console.log('start with slide - ' + i);
         var newColorText = new Array();
+        var counterWithoutPic = 0;
+
+        withPic = pre.getSlide(i).checkPic();
+        if (!withPic) { counterWithoutPic++; } //count for slides without pic
 
         //without firs slide
         if (i != 1) {
@@ -26,6 +31,17 @@ const start = async (fileName) => {
             textArray = pre.getSlide(i).getArrText(); //textArray[0] --> string, textArray[1] --> properties
             newTextArray = changeString.arrayString(textArray)
             pre.getSlide(i).setArrText(newTextArray, textArray[1]);
+        }
+
+        if (counterWithoutPic == 3) {
+            var textSlide = '' //create string for get pic
+            for (text of textArray[0]) {
+                textSlide += text.join(' ')
+            }
+            //add send to pic function
+            counterWithoutPic = 0;
+            url = ''
+            pre.getSlide(i).addImage(url);
         }
 
         //original background color
@@ -92,13 +108,23 @@ const getValColor = (arrayTextColor) => {
 }
 
 const printXml = async () => {
-    const pre = await pptx.load('semi.pptx');
-    var xmlDataSlide = pre.getSlide(4).getSlideXmlAsString();
-    console.log(xmlDataSlide);
+    const filePath = path.join(__dirname, `../uploads/semi.pptx`);
+    const pre = await pptx.load(filePath);
+    var arr = [[], ['dkdif', 'djhdfskj', 'pppp'], ['d85f', 'iuip']]
+    var str = ''
+    for (a of arr) {
+        str += a.join(' ')
+        str += ' '
+    }
+
+    console.log(str);
+    //var xmlDataSlide = pre.getSlide(4).getSlideXmlAsString();
+
+    //console.log(xmlDataSlide);
 
 }
-//printXml();
+printXml();
 
 
-module.exports = { start }
+//module.exports = { start }
 

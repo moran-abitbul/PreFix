@@ -10,7 +10,7 @@ const arrayString = (arrStringAndProperties) => {
     indexTitle = getIndexTitle(properties);
     let title = str[indexTitle[0]][indexTitle[1]];
 
-    if(title.toLowerCase() === 'outline') {
+    if(title.toLowerCase() === 'outline ') {
         return str;
     }
 
