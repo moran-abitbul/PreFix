@@ -2,6 +2,7 @@ import { FileUploader } from './comps/fileUploader/FileUploader';
 import Home from './comps/home/HomePage';
 import ShowChange from './comps/showChange/ShowChange';
 import SelectChange from './comps/selectChange/SelectChange';
+import DownloadFile from './comps/downloadFile/DownloadFile'
 import { useState } from 'react';
 
 import './App.css';
@@ -39,6 +40,9 @@ function App() {
         </Route>
         <Route path="/showChange">
           <ShowChange picArray={picArray} />
+        </Route>
+        <Route path="/downloadFile">
+          <DownloadFile />
         </Route>
       </Router>
     </div>

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import "./showChange.css";
 
 import Carousel from 'react-elastic-carousel'
@@ -62,6 +64,12 @@ function ShowChange({ picArray }) {
             <MultiCheckBox />
 
             <MultiselectOpt />
+
+
+            <Link to="/downloadFile">
+                <button>End and download your file !!</button>
+            </Link>
+
 
         </div >
     );

@@ -10,13 +10,9 @@ from nltk.tokenize import RegexpTokenizer
 from nltk.stem import PorterStemmer
 
 import sys
-import json
 
-# def bagOfWords():
 
 text = str(sys.argv[1])
-
-#text = sys.stdin.readline()
 
 # preprocess the data
 
@@ -51,7 +47,7 @@ for w in tokens:
 # print('\nwordsFiltered after remove stop word:')
 # print(wordsFiltered)
 
-# # Stemming
+# Stemming
 ps = PorterStemmer()
 
 for i in range(len(wordsFiltered)):
@@ -67,7 +63,8 @@ tagged = nltk.pos_tag(wordsFiltered)
 # print('\ndict of pos:')
 # print(tagged)
 
-# # Identify named entities:
+# for visually vector
+# Identify named entities:
 # entities = nltk.chunk.ne_chunk(tagged)
 # print('\nentities: ')
 # print(entities)
@@ -87,7 +84,7 @@ for data in wordsFiltered:
 # print('\ndict/bag:')
 # print(word2count)
 
-# create dics od nouns
+# create dics of nouns
 # for element in tagged:
 #     word = element[0]
 #     pos = element[1]
@@ -112,4 +109,3 @@ freq_words = heapq.nlargest(3, word2count, key=word2count.get)
 freq_words_str = ' '.join([str(elem) for elem in freq_words])
 
 print(freq_words_str)
-#bagOfWords('Data Set: Data For Learning, Examples – with or without “results” Occam’s Razor: prefer a simple model if possible')
