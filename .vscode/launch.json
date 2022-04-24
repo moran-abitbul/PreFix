@@ -19,7 +19,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\server\\extantions\\getPicFromText.js"
+            "program": "${workspaceFolder}\\server\\visuals\\updateVisualSlide.js"
             //"program": "${workspaceFolder}\\server\\picAPI.js"
             //"program": "${workspaceFolder}\\server\\routes\\fileUploaderRoutes.js"
             //"program": "${workspaceFolder}\\server\\server.js"
