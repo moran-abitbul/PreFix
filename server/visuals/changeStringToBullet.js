@@ -3,14 +3,14 @@ const newLine = '\n'
 const bullet = '\u2022'
 
 const arrayString = (arrStringAndProperties) => {
-    
+
     str = arrStringAndProperties[0];
     properties = arrStringAndProperties[1];
 
     indexTitle = getIndexTitle(properties);
     let title = str[indexTitle[0]][indexTitle[1]];
-
-    if(title.toLowerCase() === 'outline ') {
+    
+    if (title.toLowerCase() == 'outline.') {
         return str;
     }
 
@@ -34,8 +34,8 @@ const getIndexTitle = (arrProperties) => {
             let size = arrProperties[i][j][0]['$']['sz']
             if (size > max) {
                 max = size
-                index[0] = i
-                index[1] = j
+                index[0] = i;
+                index[1] = j;
             }
         }
     }
@@ -44,12 +44,12 @@ const getIndexTitle = (arrProperties) => {
 
 const creatBullet = (str, isTitle) => {
     if (isTitle) {
-         newStr = ' '
+        newStr = ''
     } else {
         newStr = bullet + ' '
     }
 
-    for (let ch = 0; ch < str.length - 2; ch++) {
+    for (let ch = 0; ch < str.length - 1; ch++) {
         if (str[ch] == ':' || str[ch] == ',') {
             newStr += str[ch] + '\n' + '    '
         } else {

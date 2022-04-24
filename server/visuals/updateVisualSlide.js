@@ -16,7 +16,7 @@ const start = async (fileName) => {
     const pre = await pptx.load(filePath);
 
     //go through all the slides
-    for (let i = 1; i < 2; i++) {
+    for (let i = 2; i < 3; i++) {
         console.log('start with slide - ' + i);
         var newColorText = new Array();
         var counterWithoutPic = 0;
@@ -32,6 +32,7 @@ const start = async (fileName) => {
             pre.getSlide(i).setArrText(newTextArray, textArray[1]);
         }
 
+        //add pic to slide
         if (counterWithoutPic == 3) {
             var textSlide = '' //create string for get pic
             for (text of textArray[0]) {
@@ -42,7 +43,13 @@ const start = async (fileName) => {
             picUrl = extantion.getPicFromText(textSlide, 'title').then((url) => {
                 return (url.toString('utf8'))
             })
-            pre.getSlide(i).addImage(picUrl);
+            await pre.getSlide(1).addImage({
+                //src: picUrl,
+                src: 'https://media.geeksforgeeks.org/wp-content/cdn-uploads/Semaphores_1.png',
+                x: 600,
+                y: 310,
+                cx: 350,
+            });
 
             counterWithoutPic = 0;
         }
@@ -113,21 +120,21 @@ const getValColor = (arrayTextColor) => {
 const printXml = async () => {
     const filePath = path.join(__dirname, `../uploads/semi.pptx`);
     const pre = await pptx.load(filePath);
-    var arr = [[], ['dkdif', 'djhdfskj', 'pppp'], ['d85f', 'iuip']]
-    var str = ''
-    for (a of arr) {
-        str += a.join(' ')
-        str += ' '
-    }
-
-    console.log(str);
+    await pre.getSlide(1).addImage({
+        src: 'https://media.geeksforgeeks.org/wp-content/cdn-uploads/Semaphores_1.png',
+        x: 600,
+        y: 310,
+        cx: 350,
+    });
     //var xmlDataSlide = pre.getSlide(4).getSlideXmlAsString();
 
     //console.log(xmlDataSlide);
-
+    const fileSavePath = path.join(__dirname, `../uploads/semiSave.pptx`);
+    pre.save(fileSavePath);
+    console.log("saved");
 }
-printXml();
+//printXml();
 
-
+start("semi.pptx");
 //module.exports = { start }
 
