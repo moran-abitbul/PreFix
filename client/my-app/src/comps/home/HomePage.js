@@ -10,7 +10,6 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
 
-
 function HomePage() {
     return (
         <div className="home">
@@ -20,18 +19,16 @@ function HomePage() {
 
             <h3>תקנון האתר</h3>
 
-
-
-            <ul>
+            {/* <ul>
                 <li>שלום וברכה</li>
                 <li>אתם מתחייבים ל</li>
-            </ul>
+            </ul> */}
 
-            <div>
-                <h1>Your slide:</h1>
 
-            </div>
+            <br />
+            <br />
 
+            <br />
 
             <FormGroup>
                 <FormControlLabel control={<Checkbox defaultChecked />} label="הנני מסכים" />
@@ -40,7 +37,7 @@ function HomePage() {
 
             <Link to="/selectChange">
                 <Stack spacing={2} direction="row">
-                    <Button variant="contained">Start</Button>
+                    <Button class = 'buttonStart' variant="contained">Start</Button>
                 </Stack>
             </Link>
             {/*     

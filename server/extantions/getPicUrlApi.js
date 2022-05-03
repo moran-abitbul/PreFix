@@ -1,5 +1,6 @@
 const axios = require('axios')
 
+//Get query and tbs (boost) and return url pic
 const getImageFromText = (q, tbs) => {
 
     var api_key = 'f09834b970abc1d46e74ddcf046cb41dde0a4feef039268388ae5cd24a3d9746'
@@ -31,37 +32,15 @@ const getImageFromText = (q, tbs) => {
     })
 }
 
-//getImageFromText('data learn exampl', 'Data Set').then((url) => { console.log(url); })
+// const q = "machine learning"
+// const tbs = "algorithm"
+
+// picToAdd = getPic('machine learning', 'introduction').then((img) => {
+//     return img
+// })
+
+// picToAdd.then((img) => { console.log(img) })
+
+
+//getImageFromText('learn comput machin', 'algorithm').then((url) => { console.log(url); })
 module.exports = { getImageFromText };
-
-
-// const SerpApi = require('google-search-results-nodejs');
-// const search = new SerpApi.GoogleSearch("f09834b970abc1d46e74ddcf046cb41dde0a4feef039268388ae5cd24a3d9746");
-
-
-// const params = {
-//     q: "machine learning",
-//     tbm: "isch",
-//     ijn: "0",
-//     tbs: "algorithm",
-//     engine: "google",
-//     google_domain: "google.com",
-//     lr: "lang_iw|lang_en",
-//     num: "10"
-// };
-
-// const callback = function (data) {
-//     console.log(data['images_results'][0]);
-// };
-
-// // Show result as JSON
-// search.json(params, callback);
-
-
-
-
-
-
-
-
-

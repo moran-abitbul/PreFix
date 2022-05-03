@@ -1,8 +1,16 @@
-h1{
-    color: #50b5c7;
+h1 {
+    color: #1f76c2;
+}
+
+.buttonStart {
+    margin-left: 550px;
 }
 
 img {
-    width:200px;
-    height:128px;
-  }
+    width: 200px;
+    height: 128px;
+}
+
+body {
+    background-color: #cceef9;
+}

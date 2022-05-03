@@ -2,7 +2,7 @@ const fix = require('./fixContrast');
 const PPTX = require('er-nodejs-pptx');
 const changeString = require('./changeStringToBullet');
 const path = require('path');
-const extantion = require('../extantions/getPicFromText')
+const extantion = require('../extantions/getPicUrl')
 
 
 let pptx = new PPTX.Composer();
@@ -16,7 +16,7 @@ const start = async (fileName) => {
     const pre = await pptx.load(filePath);
 
     //go through all the slides
-    for (let i = 2; i < 3; i++) {
+    for (let i = 1; i < 2; i++) {
         console.log('start with slide - ' + i);
         var newColorText = new Array();
         var counterWithoutPic = 0;
@@ -135,6 +135,6 @@ const printXml = async () => {
 }
 //printXml();
 
-start("semi.pptx");
-//module.exports = { start }
+//start("semi.pptx");
+module.exports = { start }
 

@@ -37,10 +37,8 @@ export const FileUploader = ({ setPicArray }) => {
             })
     };
 
-
     return (
         <div className="file">
-
             <form method="POST" action="#" id="#" onSubmit={OnSubmit}>
                 <div className="form-group files">
                     <h2>Upload Your File</h2>
@@ -50,12 +48,8 @@ export const FileUploader = ({ setPicArray }) => {
                         className="form-control"
                         multiple="#" />
                 </div>
-
                 <button type="submit" > Start </button>
-
             </form>
-
         </div>
-
     )
 };

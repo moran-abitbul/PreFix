@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import "./showChange.css";
 
 import Carousel from 'react-elastic-carousel'
-import MultiselectOpt from '../multiSelect/MultiSelectOpt'
 import MultiCheckBox from '../multiCheckBox/MultiCheckBox'
 
 function ShowChange({ picArray }) {
@@ -48,28 +47,26 @@ function ShowChange({ picArray }) {
             )} */}
 
             <div>{data}</div>
-
             <br />
             <br />
             <br />
 
             {/*shown the pic array  */}
-            <Carousel itemPadding={[50, 100]} itemsToScroll={3} itemsToShow={3} >
+            <Carousel style={{ alignItems: 'center' }} itemPadding={[50, 200]} itemsToScroll={3} itemsToShow={3} >
                 {picArray.map(picSrc => {
-                    return <img src={require(`./slidePic/${picSrc}`)} key={picSrc} alt='' />
+                    return (<div>
+                        <img className="photo" src={require(`./slidePic/${picSrc}`)} key={picSrc} alt='' />
+                        <MultiCheckBox />
+                    </div>)
+
                 })}
             </Carousel>
 
-
-            <MultiCheckBox />
-
-            <MultiselectOpt />
-
+            {/* <MultiselectOpt /> */}
 
             <Link to="/downloadFile">
-                <button>End and download your file !!</button>
+                <button>End and download your final file</button>
             </Link>
-
 
         </div >
     );
