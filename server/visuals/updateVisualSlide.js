@@ -16,19 +16,19 @@ const start = async (fileName) => {
     const pre = await pptx.load(filePath);
 
     //go through all the slides
-    for (let i = 2; i < 3; i++) {
+    for (let i = 1; i < 2; i++) {
         console.log('start with slide - ' + i);
         var newColorText = new Array();
         var counterWithoutPic = 0;
 
-        withPic = pre.getSlide(i).checkPic();
+        var withPic = pre.getSlide(i).checkPic();
         if (!withPic) { counterWithoutPic++; } //count for slides without pic
 
         //without firs slide
         if (i != 1) {
-            //fix the sentences
-            textArray = pre.getSlide(i).getArrText(); //textArray[0] --> string, textArray[1] --> properties
-            newTextArray = changeString.arrayString(textArray)
+            //fix the sentences //array of shape that each index is an array of the sentences
+            var textArray = pre.getSlide(i).getArrText(); //textArray[0] --> string, textArray[1] --> properties
+            var newTextArray = changeString.arrayString(textArray)
             pre.getSlide(i).setArrText(newTextArray, textArray[1]);
         }
 
@@ -55,24 +55,20 @@ const start = async (fileName) => {
         }
 
         //original background color
-        backgroundColor = pre.getSlide(i).getBackgroundColor();
-        //console.log("background color: " + backgroundColor);
+        let backgroundColor = pre.getSlide(i).getBackgroundColor();
+        console.log("background color: " + backgroundColor);
 
         //array of shape that each index is an array of original colors of the sentences
-        colorText = pre.getSlide(i).getArrColors();
+        let colorText = pre.getSlide(i).getArrColors();
         //console.log(colorText);
 
-        //array of shape that each index is an array of the sentences
-        shapeTextArray = pre.getSlide(i).getArrText();
-        //console.log(shapeTextArray);
+        let valColorText = getValColor(colorText);
 
-        valColorText = getValColor(colorText);
-
-        //update the background color
-        updateBackground = await fix.checkContrast(backgroundColor, valColorText).then(array => {
+        //update the background color 
+        let updateBackground = await fix.checkContrast(backgroundColor, valColorText).then(array => {
             return array[0]; //colorbackground and text first
         });
-        //console.log("updateBackground: " + updateBackground);
+        console.log("updateBackground: " + updateBackground);
 
         //if there more then 1 color of text
         for (let j = 0; j < colorText.length; j++) { //num of shape
@@ -86,7 +82,7 @@ const start = async (fileName) => {
 
 
         // change slide
-        var slide_i = pre.getSlide(i);
+        let slide_i = pre.getSlide(i);
         console.log("change color in slide: " + i);
         //console.log(newColorText);
         slide_i.backgroundColor(updateBackground);
@@ -97,6 +93,8 @@ const start = async (fileName) => {
         }
 
     }
+
+
 
     pre.save(fileSavePath);
     console.log("saved");
@@ -135,6 +133,6 @@ const printXml = async () => {
 }
 //printXml();
 
-start("semi.pptx");
+start("Chapter6.pptx");
 //module.exports = { start }
 
