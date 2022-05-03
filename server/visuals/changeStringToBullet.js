@@ -9,8 +9,8 @@ const arrayString = (arrStringAndProperties) => {
 
     indexTitle = getIndexTitle(properties);
     let title = str[indexTitle[0]][indexTitle[1]];
-    
-    if (title.toLowerCase() == 'outline.') {
+
+    if ((title.toLowerCase()).includes('outline')) {
         return str;
     }
 
@@ -39,7 +39,7 @@ const getIndexTitle = (arrProperties) => {
             }
         }
     }
-    return index;
+    return [0,0];
 }
 
 const creatBullet = (str, isTitle) => {
@@ -50,7 +50,7 @@ const creatBullet = (str, isTitle) => {
     }
 
     for (let ch = 0; ch < str.length - 1; ch++) {
-        if (str[ch] == ':' || str[ch] == ',') {
+        if (str[ch] == ':' || str[ch] == ',' && ch < str.length-1) {
             newStr += str[ch] + '\n' + '    '
         } else {
             if (str[ch] == '.') {
