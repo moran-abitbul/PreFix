@@ -1,9 +1,9 @@
 const fix = require('./fixContrast');
 const PPTX = require('er-nodejs-pptx');
-const changeString = require('./changeStringToBullet');
 const path = require('path');
 const extantion = require('../extantions/getPicUrl')
-
+const checkValid = require('./checkValidTextSlide')
+const changeString = require('./changeStringToBullet')
 
 let pptx = new PPTX.Composer();
 
@@ -25,12 +25,17 @@ const start = async (fileName) => {
         if (!withPic) { counterWithoutPic++; } //count for slides without pic
 
         //without firs slide
-        // if (i != 1) {
-        //     //fix the sentences //array of shape that each index is an array of the sentences
-        //     var textArray = pre.getSlide(i).getArrText(); //textArray[0] --> string, textArray[1] --> properties
-        //     var newTextArray = changeString.arrayString(textArray)
-        //     pre.getSlide(i).setArrText(newTextArray, textArray[1]);
-        // }
+        if (i != 1) {
+            //fix the sentences //array of shape that each index is an array of the sentences
+            var textArray = pre.getSlide(i).getArrText(); //textArray[0] --> string, textArray[1] --> properties
+            var isAValidText = checkValid.checkValidText(textArray)
+
+            //change the text if it not valid  
+            if (!isAValidText) {
+                var newTextArray = changeString.changeText(textArray)
+                pre.getSlide(i).setArrText(newTextArray, textArray[1]);
+            }
+        }
 
         //add pic to slide
         if (counterWithoutPic == 3) {
@@ -44,7 +49,7 @@ const start = async (fileName) => {
                 return (url.toString('utf8'))
             })
             await pre.getSlide(1).addImage({
-                //src: picUrl,
+                //src: picUrl
                 src: 'https://media.geeksforgeeks.org/wp-content/cdn-uploads/Semaphores_1.png',
                 x: 600,
                 y: 310,
