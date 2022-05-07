@@ -1,9 +1,9 @@
 const fix = require('./fixContrast');
 const PPTX = require('er-nodejs-pptx');
-const changeString = require('./changeStringToBullet');
 const path = require('path');
 const extantion = require('../extantions/getPicUrl')
-
+const checkValid = require('./checkValidTextSlide')
+const changeString = require('./changeStringToBullet')
 
 let pptx = new PPTX.Composer();
 
@@ -16,7 +16,7 @@ const start = async (fileName) => {
     const pre = await pptx.load(filePath);
 
     //go through all the slides
-    for (let i = 1; i < 2; i++) {
+    for (let i = 3; i < 4; i++) {
         console.log('start with slide - ' + i);
         var newColorText = new Array();
         var counterWithoutPic = 0;
@@ -28,8 +28,13 @@ const start = async (fileName) => {
         if (i != 1) {
             //fix the sentences //array of shape that each index is an array of the sentences
             var textArray = pre.getSlide(i).getArrText(); //textArray[0] --> string, textArray[1] --> properties
-            var newTextArray = changeString.arrayString(textArray)
-            pre.getSlide(i).setArrText(newTextArray, textArray[1]);
+            var isAValidText = checkValid.checkValidText(textArray)
+
+            //change the text if it not valid  
+            if (!isAValidText) {
+                var newTextArray = changeString.changeText(textArray)
+                pre.getSlide(i).setArrText(newTextArray, textArray[1]);
+            }
         }
 
         //add pic to slide
@@ -44,7 +49,7 @@ const start = async (fileName) => {
                 return (url.toString('utf8'))
             })
             await pre.getSlide(1).addImage({
-                //src: picUrl,
+                //src: picUrl
                 src: 'https://media.geeksforgeeks.org/wp-content/cdn-uploads/Semaphores_1.png',
                 x: 600,
                 y: 310,
@@ -106,9 +111,11 @@ const start = async (fileName) => {
 const getValColor = (arrayTextColor) => {
     for (let i in arrayTextColor) {
         for (let j in arrayTextColor[i]) {
-            if (arrayTextColor[i][j] != 'ffffff' && arrayTextColor[i][j] != '000000') {
-                return arrayTextColor[i][j];
-            }
+            t = typeof arrayTextColor[i];
+            if (typeof arrayTextColor[i] === 'object')
+                if (arrayTextColor[i][j] != 'ffffff' && arrayTextColor[i][j] != '000000') {
+                    return arrayTextColor[i][j];
+                }
         }
     }
 
@@ -116,7 +123,7 @@ const getValColor = (arrayTextColor) => {
 }
 
 const printXml = async () => {
-    const filePath = path.join(__dirname, `../uploads/semi.pptx`);
+    const filePath = path.join(__dirname, `../uploads/check.pptx`);
     const pre = await pptx.load(filePath);
     await pre.getSlide(1).addImage({
         src: 'https://media.geeksforgeeks.org/wp-content/cdn-uploads/Semaphores_1.png',
@@ -124,15 +131,15 @@ const printXml = async () => {
         y: 310,
         cx: 350,
     });
-    //var xmlDataSlide = pre.getSlide(4).getSlideXmlAsString();
+    // var xmlDataSlide = pre.getSlide(5).getSlideXmlAsString();
 
     //console.log(xmlDataSlide);
-    const fileSavePath = path.join(__dirname, `../uploads/semiSave.pptx`);
-    pre.save(fileSavePath);
-    console.log("saved");
+    // const fileSavePath = path.join(__dirname, `../uploads/semiSave.pptx`);
+    // pre.save(fileSavePath);
+    // console.log("saved");
 }
 //printXml();
 
-//start("Chapter6.pptx");
-module.exports = { start }
+start("check.pptx");
+//module.exports = { start }
 

@@ -2,28 +2,83 @@ const tab = '  '//\ud808\udef0'
 const newLine = '\n'
 const bullet = '\u2022'
 
-const arrayString = (arrStringAndProperties) => {
+const arrangeStr = (str) => {
 
-    str = arrStringAndProperties[0];
-    properties = arrStringAndProperties[1];
+    var newStr = bullet
+    var countWordBeforeDot = 0 // Number of word in this paragraph
 
-    indexTitle = getIndexTitle(properties);
-    let title = str[indexTitle[0]][indexTitle[1]];
+    // Run on all the string
+    for (let i = 0; i < str.length; i++) {
 
-    if ((title.toLowerCase()).includes('outline')) {
-        return str;
+        //End of word
+
+        // ':' not at the end of sentence- not valid
+        if (str[i] === ':' && i < str.length - 2) {
+            newStr += ':\n\t'
+        }
+
+        else if (str[i] === '.' && i < str.length - 2) {
+            newStr += '\n'
+            newStr += bullet
+        }
+
+        else if (str[i] === ',' && countWordBeforeDot >= 7) {
+            newStr += ',\n\t'
+            countWordBeforeDot = 0
+        }
+        else if (str[i] === ' ') {
+            countWordBeforeDot += 1
+            newStr += str[i]
+        }
+        else {
+            newStr += str[i]
+        }
+
+        //check when to new line when i have not a dot or , 
+        // else if (countWordBeforeDot == 10) {
+        //     newStr += '\n'
+        //     countWordBeforeDot = 0
+        // }
+
     }
 
-    for (i in str) {
-        for (j in str[i]) {
-            if (i == indexTitle[0] && j == indexTitle[1]) { //isTitle
-                str[i][j] = creatBullet(str[i][j], true)
-            } else {
-                str[i][j] = creatBullet(str[i][j], false)
+    return newStr
+}
+
+// array of paragraphs in specified shape
+const changeText = (arrStringAndProperties) => {
+
+    shapePara = arrStringAndProperties[0];
+    properties = arrStringAndProperties[1];
+    indexTitle = getIndexTitle(properties);
+    let title = shapePara[indexTitle[0]][indexTitle[1]];
+
+    // for all the paragraph in the shape
+    for (let i = 0; i < shapePara.length; i++) {
+        para = shapePara[i]
+
+        if (i != indexTitle) {
+
+            //the paragraph is not a array
+            if (typeof para === 'string') {
+                strAfterArrange = arrangeStr(para)
+                shapePara[i] = strAfterArrange
+            }
+
+            // the paragraph has array of a:r
+            else if (typeof para === 'object') {
+
+                //for all the runText in the paragraph 
+                for (let j = 0; j < para.length; j++) {
+                    runText = para[j][0];
+                    strAfterArrange = arrangeStr(runText)
+                    para[j][0] = strAfterArrange
+                }
             }
         }
     }
-    return str;
+
+    return shapePara
 }
 
 const getIndexTitle = (arrProperties) => {
@@ -39,34 +94,7 @@ const getIndexTitle = (arrProperties) => {
             }
         }
     }
-    return [0,0];
+    return [0, 0];
 }
 
-const creatBullet = (str, isTitle) => {
-    if (isTitle) {
-        newStr = ''
-    } else {
-        newStr = bullet + ' '
-    }
-
-    for (let ch = 0; ch < str.length - 1; ch++) {
-        if (str[ch] == ':' || str[ch] == ',' && ch < str.length-1) {
-            newStr += str[ch] + '\n' + '    '
-        } else {
-            if (str[ch] == '.') {
-                newStr += str[ch] + '\n' + bullet
-            } else {
-                newStr += str[ch]
-            }
-
-        }
-    }
-
-    if (str[str.length - 1] != '.') {
-        newStr += str[str.length - 1]
-    }
-    //console.log(newStr);
-    return newStr;
-}
-
-module.exports = { arrayString }
+module.exports = { changeText }
