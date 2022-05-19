@@ -16,7 +16,7 @@ const start = async (fileName) => {
     const pre = await pptx.load(filePath);
 
     //go through all the slides
-    for (let i = 3; i < 4; i++) {
+    for (let i = 4; i < 5; i++) {
         console.log('start with slide - ' + i);
         var newColorText = new Array();
         var counterWithoutPic = 0;
@@ -75,6 +75,7 @@ const start = async (fileName) => {
         });
         console.log("updateBackground: " + updateBackground);
 
+        console.log("colorText: " + colorText);
         //if there more then 1 color of text
         for (let j = 0; j < colorText.length; j++) { //num of shape
             newColorText[j] = new Array();
@@ -84,6 +85,22 @@ const start = async (fileName) => {
                 });
             }
         }
+
+        //min contrast
+        tempColorText = new Array(); //0 -> background ; 1 -> text
+        currentRatio = 1000;
+        for (let j = 0; j < colorText.length; j++) { //num of shape
+            for (let k = 0; k < colorText[j].length; k++) { //num of row text in one shape
+                await fix.ratioContrast(backgroundColor, colorText[j][k]).then(ratio => {
+                    if (currentRatio <= ratio) {
+                        tempColorText[0] = colorText[j]
+                    }
+                    currentRatio = ratio;
+                });
+            }
+        }
+        console.log(tempColorText);
+        break;
 
 
         // change slide

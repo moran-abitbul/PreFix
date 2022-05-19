@@ -31,10 +31,21 @@ const checkContrast = async (background, textColor) => {
     });
 }
 
+const ratioContrast = async (background, textColor) => {
+    console.log("ratioContrast - get colors: " + " background: " + background + " textColor: " + textColor);
+    let dataJson = await color.getData(background, textColor); //accept data from api contrast
+    let ratio = dataJson['ratio'];
+    return await new Promise((resolve) => {
+        resolve(ratio);
+
+    })
+
+}
 const textContrast = async (backgroundT, textColorT) => {
     if (backgroundT == null || textColorT == null) { return; }
     var dataJsonT = await color.getData(backgroundT, textColorT); //accept data from api contrast
     var ratioT = dataJsonT['ratio'];
+    console.log("textContrast - get colors: " + " background: " + backgroundT + " textColor: " + textColorT);
     return await new Promise((resolve) => {
         // letconsole.log("text contrast-->  ratio: " + ratioT + " Bcolor: " + backgroundT + " Tcolor: " + textColorT);
         if (ratioT < 7) {
@@ -54,4 +65,4 @@ const textContrast = async (backgroundT, textColorT) => {
 }
 
 
-module.exports = { checkContrast, textContrast }
+module.exports = { checkContrast, textContrast, ratioContrast }
