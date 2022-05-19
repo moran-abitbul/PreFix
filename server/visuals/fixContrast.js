@@ -45,7 +45,7 @@ const textContrast = async (backgroundT, textColorT) => {
     if (backgroundT == null || textColorT == null) { return; }
     var dataJsonT = await color.getData(backgroundT, textColorT); //accept data from api contrast
     var ratioT = dataJsonT['ratio'];
-    console.log("textContrast - get colors: " + " background: " + backgroundT + " textColor: " + textColorT);
+  //  console.log("textContrast - get colors: " + " background: " + backgroundT + " textColor: " + textColorT);
     return await new Promise((resolve) => {
         // letconsole.log("text contrast-->  ratio: " + ratioT + " Bcolor: " + backgroundT + " Tcolor: " + textColorT);
         if (ratioT < 7) {

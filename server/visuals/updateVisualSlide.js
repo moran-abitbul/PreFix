@@ -19,7 +19,7 @@ const start = async (fileName) => {
 
     // go through all the slides 
     //for (let i = 1; i < slidesNum + 1; i++) {
-        for (let i = 9; i < 11; i++) {
+    for (let i = 3; i < 4; i++) {
 
         console.log('start with slide - ' + i);
         var newColorText = new Array();
@@ -75,8 +75,9 @@ const start = async (fileName) => {
         console.log('original color text:');
         console.log(colorText);
 
-        let valColorText = getValColor(colorText);
-
+        let valColorText = await getValColor(backgroundColor, colorText);
+        console.log(valColorText);
+        
         //update the background color 
         let updateBackground = await fix.checkContrast(backgroundColor, valColorText).then(array => {
             return array[0]; //colorbackground and text first
@@ -95,22 +96,6 @@ const start = async (fileName) => {
             }
         }
 
-        //min contrast
-        tempColorText = new Array(); //0 -> background ; 1 -> text
-        currentRatio = 1000;
-        for (let j = 0; j < colorText.length; j++) { //num of shape
-            for (let k = 0; k < colorText[j].length; k++) { //num of row text in one shape
-                await fix.ratioContrast(backgroundColor, colorText[j][k]).then(ratio => {
-                    if (currentRatio <= ratio) {
-                        tempColorText[0] = colorText[j]
-                    }
-                    currentRatio = ratio;
-                });
-            }
-        }
-        console.log(tempColorText);
-        break;
-
 
         // change slide
         let slide_i = pre.getSlide(i);
@@ -126,7 +111,6 @@ const start = async (fileName) => {
     }
 
 
-
     pre.save(fileSavePath);
     console.log("saved");
 
@@ -134,18 +118,22 @@ const start = async (fileName) => {
 
 }
 
-const getValColor = (arrayTextColor) => {
-    for (let i in arrayTextColor) {
-        for (let j in arrayTextColor[i]) {
-            t = typeof arrayTextColor[i];
-            if (typeof arrayTextColor[i] === 'object')
-                if (arrayTextColor[i][j] != 'ffffff' && arrayTextColor[i][j] != '000000') {
-                    return arrayTextColor[i][j];
+const getValColor = async (backgroundColor, colorText) => {
+    //min contrast
+    var tempColorText = null
+    var currentRatio = 1000;
+    for (paraColor of colorText) {
+        for (let runText in paraColor) {
+            await fix.ratioContrast(backgroundColor, paraColor[runText]).then(ratio => {
+                if (ratio <= currentRatio) {
+                    tempColorText = paraColor[runText]
+                    currentRatio = ratio
                 }
+            })
         }
     }
 
-    return arrayTextColor[0][0]; //default
+    return tempColorText
 }
 
 const printXml = async () => {
@@ -166,6 +154,6 @@ const printXml = async () => {
 }
 //printXml();
 
-//start("OP.pptx");
-module.exports = { start }
+start("test.pptx");
+//module.exports = { start }
 
