@@ -13,10 +13,11 @@ function App() {
 
   //like global state
   const [picArray, setPicArray] = useState();
+  // const [updatedFile, setUpdatedFile] = useState();
   //const [picArrayAfterChange, setPicArrayAfterChange] = useState();
 
-
   return (
+
     <div className="App">
       {/* <Routes>
         <Route path="/" element={<Home />} />

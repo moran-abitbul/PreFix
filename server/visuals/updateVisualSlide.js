@@ -1,7 +1,7 @@
 const fix = require('./fixContrast');
 const PPTX = require('er-nodejs-pptx');
 const path = require('path');
-const extantion = require('../extantions/getPicUrl')
+const extantion = require('../extensions/getPicUrl')
 const checkValid = require('./checkValidTextSlide')
 const changeString = require('./changeStringToBullet')
 
@@ -15,8 +15,12 @@ const start = async (fileName) => {
 
     const pre = await pptx.load(filePath);
 
-    //go through all the slides
-    for (let i = 4; i < 5; i++) {
+    const slidesNum = pre.presentation.content['ppt/presentation.xml']['p:presentation']['p:sldIdLst'][0]['p:sldId'].length;
+
+    // go through all the slides 
+    //for (let i = 1; i < slidesNum + 1; i++) {
+        for (let i = 9; i < 11; i++) {
+
         console.log('start with slide - ' + i);
         var newColorText = new Array();
         var counterWithoutPic = 0;
@@ -24,7 +28,7 @@ const start = async (fileName) => {
         var withPic = pre.getSlide(i).checkPic();
         if (!withPic) { counterWithoutPic++; } //count for slides without pic
 
-        //without firs slide
+        //without first slide
         if (i != 1) {
             //fix the sentences //array of shape that each index is an array of the sentences
             var textArray = pre.getSlide(i).getArrText(); //textArray[0] --> string, textArray[1] --> properties
@@ -44,10 +48,13 @@ const start = async (fileName) => {
                 textSlide += text.join(' ')
             }
 
+            // run this code 
+
             //get pic url from API
-            picUrl = extantion.getPicFromText(textSlide, 'title').then((url) => {
-                return (url.toString('utf8'))
-            })
+            // picUrl = extantion.getPicFromText(textSlide, 'title').then((url) => {
+            //     return (url.toString('utf8'))
+            // })
+
             await pre.getSlide(1).addImage({
                 //src: picUrl
                 src: 'https://media.geeksforgeeks.org/wp-content/cdn-uploads/Semaphores_1.png',
@@ -65,7 +72,8 @@ const start = async (fileName) => {
 
         //array of shape that each index is an array of original colors of the sentences
         let colorText = pre.getSlide(i).getArrColors();
-        //console.log(colorText);
+        console.log('original color text:');
+        console.log(colorText);
 
         let valColorText = getValColor(colorText);
 
@@ -75,7 +83,8 @@ const start = async (fileName) => {
         });
         console.log("updateBackground: " + updateBackground);
 
-        console.log("colorText: " + colorText);
+
+        // create new color text for update the slide
         //if there more then 1 color of text
         for (let j = 0; j < colorText.length; j++) { //num of shape
             newColorText[j] = new Array();
@@ -157,6 +166,6 @@ const printXml = async () => {
 }
 //printXml();
 
-start("check.pptx");
-//module.exports = { start }
+//start("OP.pptx");
+module.exports = { start }
 

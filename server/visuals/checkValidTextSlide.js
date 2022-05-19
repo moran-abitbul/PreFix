@@ -34,13 +34,15 @@ const checkValidString = (str) => {
 
 // array of paragraphs in specified shape
 const checkValidText = (shapePara) => {
+
     shapePara = shapePara[0]
+
     // for all the paragraph in the shape
     for (let i = 0; i < shapePara.length; i++) {
-        para = shapePara[i]
+        let para = shapePara[i]
 
         //the paragraph is not a array
-        if (typeof para === 'string') {
+        if (typeof para == 'string') {
 
             if (!checkValidString(para)) {
                 console.log('fail in para')
@@ -54,10 +56,18 @@ const checkValidText = (shapePara) => {
 
             //for all the runText in the paragraph 
             for (let j = 0; j < para.length; j++) {
-                runText = para[j][0];
+
+                let runText = para[j];
+
+                if (typeof runText === 'string') {
+
+                }
+
+                else { //if the object contain inner array
+                    runText = runText[0]
+                }
 
                 if (!checkValidString(runText)) {
-
                     console.log('fail in run text')
                     return false
                 }
@@ -67,7 +77,6 @@ const checkValidText = (shapePara) => {
 
     return true
 }
-
 
 // stringArr = [[["\t hello word word word word word: word word word word word"], ["hello word word word word word: word word word word word"]]
 //     , "hello word word word word word: word word word word word",

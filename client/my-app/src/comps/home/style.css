@@ -2,15 +2,26 @@ h1 {
     color: #1f76c2;
 }
 
-.buttonStart {
-    margin-left: 550px;
+h2 {
+    color: #243c52;
 }
 
-img {
-    width: 200px;
-    height: 128px;
+/* .buttonStart {
+    margin-left: 550px;
+} */
+
+.bgImage {
+    width: 270px;
+    height: 200px;
+    opacity: 1;
+    border-radius: 8px;
 }
+
+/* img {
+    width: 300px;
+    height: 200px;
+} */
 
 body {
-    background-color: #cceef9;
+    background-color: #cde9f9;
 }
