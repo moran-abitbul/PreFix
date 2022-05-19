@@ -2,10 +2,7 @@ const express = require('express');
 const router = express.Router()
 const multer = require('multer');
 const picName = require('../getArrayPicName')
-
 const presData = require('../getPresDate');
-const picArray = require('../picAPI');
-
 const PresentationModel = require('../models/PresentationModel')
 
 router.use(function (req, res, next) {
@@ -44,6 +41,7 @@ router
                     }
                 })
 
+                // Get fileName and return picture array for this file
                 const getArrayOfPicNames = async (fileName) => {
                     return await new Promise((resolve) => {
                         picName.getArray(fileName).then(array => {
@@ -54,21 +52,37 @@ router
 
                 const saveAndSend = async () => {
 
+                    //not run this code
                     //get the original pic array before change
                     // const arrayOfPicNamesBefore = await getArrayOfPicNames(req.file.filename).then((array) => {
                     //     return array;
                     // })                    
 
 
+
+                    // need synchronization ->  get file name and just them download the pic of him
+
                     //send the file name to edit and get new file name
-                    let fileNameSaved = await presData.getNameUpdated(req.file.filename).then((name) => {
-                        return name;
+                    // let fileNameSaved = await presData.getNameUpdated(req.file.filename).then((name) => {
+                    //     return name;
+                    // })
+
+                    //run this code
+
+                    // Get picture array of the updated file
+                    // let arrayOfPicNamesAfter = await getArrayOfPicNames(fileNameSaved).then((array) => {
+                    //     return array;
+                    // })
+
+                    const arrayOfPicNamesAfter = await presData.getNameUpdated(req.file.filename).then(async (fileNameSaved) => {
+                        console.log('file name saved: ' + fileNameSaved)
+                        await getArrayOfPicNames(fileNameSaved).then((array) => {
+                            return array;
+                        })
                     })
 
 
-                    const arrayOfPicNamesAfter = await getArrayOfPicNames(fileNameSaved).then((array) => {
-                        return array;
-                    })
+                    //const arrayOfPicNamesAfter = ['slidePic.jpg', 'slidePic-2.jpg','slidePic-2.jpg', 'slidePic.jpg', 'slidePic-2.jpg','slidePic-2.jpg']
 
                     //save presentation to db
                     newPresentation.save()

@@ -2,20 +2,30 @@ import * as React from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-import "./showChange.css";
-
+import Button from '@mui/material/Button';
 import Carousel from 'react-elastic-carousel'
 import MultiCheckBox from '../multiCheckBox/MultiCheckBox'
 
+import "./showChange.css";
+
+
 function ShowChange({ picArray }) {
 
+    const [picsArray, setPicsArray] = useState(picArray);
+
     useEffect(() => {
-        makeGetRequest();
+        const resStr = (window.localStorage.getItem('picsArray'))
+        if (resStr) {
+            setPicsArray(resStr.split(','));
+        }
+        //makeGetRequest();
     }, []);
 
-    const [data, setData] = useState(null);
+    useEffect(() => {
+        window.localStorage.setItem('picsArray', picsArray); //when refresh the page update the current pics array 
+    });
 
+    const [data, setData] = useState(null);
 
     async function makeGetRequest() {
         let res = await axios.get('//localhost:8000/showChange')
@@ -24,48 +34,35 @@ function ShowChange({ picArray }) {
         setData(dataFromServer);
     }
 
-    //var path = `./slidePic/${picArray.data[0]}`; //in public folder
-
     return (
         <div className="showChange">
             <h1>Your Changes:</h1>
 
-            {/*             
-            <h1>{path}</h1> */}
+            {/* <h1>{picsArray}</h1> */}
+            {/* <div>{data}</div> */}
 
-            {/* <img src={require('./slidePic/slidePic-1.jpg')} alt='' /> */}
-
-            {/* <CarouselWrapper mode="gallery" >
-                
-            </CarouselWrapper > */}
-
-            {/* {picArray.data.map(picSrc => {
-
-                return <img src={require(`./slidePic/${picSrc}`)} alt='' />
-
-            }
-            )} */}
-
-            <div>{data}</div>
-            <br />
-            <br />
             <br />
 
             {/*shown the pic array  */}
-            <Carousel style={{ alignItems: 'center' }} itemPadding={[50, 200]} itemsToScroll={3} itemsToShow={3} >
-                {picArray.map(picSrc => {
+            {/* change picsArray!!!!!!!!!!!!!!!!!!!!! */}
+            {picsArray !== undefined && <Carousel style={{ alignItems: 'center' }} itemPadding={[40, 200]} itemsToScroll={3} itemsToShow={3} >
+
+                {picsArray.map((picSrc) => {
                     return (<div>
                         <img className="photo" src={require(`./slidePic/${picSrc}`)} key={picSrc} alt='' />
-                        <MultiCheckBox />
+                        {/* <MultiCheckBox /> */}
                     </div>)
-
                 })}
-            </Carousel>
 
-            {/* <MultiselectOpt /> */}
+                {/* <img src={require('./slidePic/slidePic.jpg')} alt='' /> */}
+
+            </Carousel>}
+
+            <br />
+            <br />
 
             <Link to="/downloadFile">
-                <button>End and download your final file</button>
+                <Button className='buttonStart' variant="contained" size = 'small'>End and download your final file</Button>
             </Link>
 
         </div >

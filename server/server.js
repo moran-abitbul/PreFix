@@ -20,7 +20,6 @@ mongoose.connect(dbConfig, {
     console.log('Database could not connected' + err)
 })
 
-
 //routers
 //const selectChangeRoutes = require('./routes/selectChangeRoutes');
 const fileUploaderRoutes = require('./routes/fileUploaderRoutes');
