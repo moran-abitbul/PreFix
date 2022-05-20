@@ -24,7 +24,7 @@ const start = async (fileName) => {
 
     //go through all the slides 
     for (let i = 1; i < slidesNum + 1; i++) {
-        //for (let i = 3; i < 4; i++) {
+        //for (let i = 5; i < 8; i++) {
 
         console.log('start with slide - ' + i);
         var newColorText = new Array();
@@ -46,7 +46,6 @@ const start = async (fileName) => {
             //}         
 
             for (textIndex in textArray[0]) {
-
                 if (textIndex != 0) {
                     slideText += textArray[0][textIndex].join(' ')
                     slideText += ' '
