@@ -20,8 +20,8 @@
                 "<node_internals>/**"
             ],
             //"program": "${workspaceFolder}\\server\\visuals\\checkValidTextSlide.js"
-            //"program": "${workspaceFolder}\\server\\visuals\\updateVisualSlide.js"
-            "program": "${workspaceFolder}\\server\\picAPI.js"
+            "program": "${workspaceFolder}\\server\\visuals\\updateVisualSlide.js"
+            //"program": "${workspaceFolder}\\server\\picAPI.js"
             //"program": "${workspaceFolder}\\server\\routes\\fileUploaderRoutes.js"
             //"program": "${workspaceFolder}\\server\\server.js"
         }
