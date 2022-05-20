@@ -52,42 +52,36 @@ router
 
                 const saveAndSend = async () => {
 
-                    //not run this code
-                    //get the original pic array before change
-                    // const arrayOfPicNamesBefore = await getArrayOfPicNames(req.file.filename).then((array) => {
-                    //     return array;
-                    // })                    
+                    // //send the file name to edit and get new file name
+                    let fileNameSaved = await presData.getNameUpdated(req.file.filename).then((name) => {
+                        return name;
+                    })
 
-
-
-                    // need synchronization ->  get file name and just them download the pic of him
-
-                    //send the file name to edit and get new file name
-                    // let fileNameSaved = await presData.getNameUpdated(req.file.filename).then((name) => {
-                    //     return name;
-                    // })
-
-                    //run this code
-
-                    // Get picture array of the updated file
+                    // // Get picture array of the updated file
                     // let arrayOfPicNamesAfter = await getArrayOfPicNames(fileNameSaved).then((array) => {
                     //     return array;
                     // })
 
-                    const arrayOfPicNamesAfter = await presData.getNameUpdated(req.file.filename).then(async (fileNameSaved) => {
-                        console.log('file name saved: ' + fileNameSaved)
-                        await getArrayOfPicNames(fileNameSaved).then((array) => {
-                            return array;
+                    const arrayOfPicNamesAfter = async () => {
+                        return await new Promise((resolve) => {
+                            getArrayOfPicNames(fileNameSaved).then((array) => {
+                                console.log('get arr of pic names');
+                                resolve(array);
+                            })
                         })
-                    })
-
-
-                    //const arrayOfPicNamesAfter = ['slidePic.jpg', 'slidePic-2.jpg','slidePic-2.jpg', 'slidePic.jpg', 'slidePic-2.jpg','slidePic-2.jpg']
+                    }
 
                     //save presentation to db
                     newPresentation.save()
-                        //.then(() => res.send('successfully uploaded'))
-                        .then(() => res.send(arrayOfPicNamesAfter))
+                        .then(() => {
+                            console.log('after save to db, and now send picArr ');
+                            arrayOfPicNamesAfter().then((picArr) => {
+                                console.log(picArr);
+                                console.log('after send pic to client');
+                                res.send(picArr)
+
+                            })
+                        })
                         .catch(err => console.log(err))
                     //res.send("Single file upload success");
                     //return res.status(200).send(req.file)

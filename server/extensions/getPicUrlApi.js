@@ -8,12 +8,16 @@ const getImageFromText = (q, tbs) => {
 
     console.log("q: " + q + ", tbs:" + tbs);
 
+    //tbs = ic: specific % 2Cisc: blue - specific color
+
     return new Promise((resolve) => {
         try {
             axios
                 .get(`https://serpapi.com/search.json?engine=google&q=${q}&tbs=${tbs}&tbm=isch&num=10&api_key=${api_key_Moran}`)
                 .then(res => {
                     picDataArray = res.data.images_results
+                    //console.log(picDataArray);
+
                     resolve(res.data.images_results[0].original)
 
                     // titleArr = []

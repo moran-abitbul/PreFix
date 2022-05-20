@@ -13,6 +13,10 @@ function ShowChange({ picArray }) {
 
     const [picsArray, setPicsArray] = useState(picArray);
 
+    console.log('in showChange: picsArray')
+    console.log(picsArray)
+
+
     useEffect(() => {
         const resStr = (window.localStorage.getItem('picsArray'))
         if (resStr) {
@@ -34,27 +38,30 @@ function ShowChange({ picArray }) {
         setData(dataFromServer);
     }
 
+    console.log('in showChange: before return. picsArray:')
+    console.log(picsArray)
+
+
     return (
         <div className="showChange">
             <h1>Your Changes:</h1>
 
-            {/* <h1>{picsArray}</h1> */}
+            <h1>{picsArray}</h1>
             {/* <div>{data}</div> */}
 
             <br />
 
             {/*shown the pic array  */}
             {/* change picsArray!!!!!!!!!!!!!!!!!!!!! */}
-            {picsArray !== undefined && <Carousel style={{ alignItems: 'center' }} itemPadding={[40, 200]} itemsToScroll={3} itemsToShow={3} >
+            {picsArray !== undefined && <Carousel style={{ alignItems: 'center' }} itemPadding={[60, 220]} itemsToScroll={3} itemsToShow={3} >
 
                 {picsArray.map((picSrc) => {
                     return (<div>
                         <img className="photo" src={require(`./slidePic/${picSrc}`)} key={picSrc} alt='' />
+
                         {/* <MultiCheckBox /> */}
                     </div>)
                 })}
-
-                {/* <img src={require('./slidePic/slidePic.jpg')} alt='' /> */}
 
             </Carousel>}
 
@@ -62,7 +69,7 @@ function ShowChange({ picArray }) {
             <br />
 
             <Link to="/downloadFile">
-                <Button className='buttonStart' variant="contained" size = 'small'>End and download your final file</Button>
+                <Button className='buttonStart' variant="contained" size='small'>End and download your final file</Button>
             </Link>
 
         </div >
