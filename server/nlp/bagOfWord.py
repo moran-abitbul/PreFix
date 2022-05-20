@@ -99,7 +99,7 @@ for data in wordsFiltered:
 # print('\ndict after sort by value')
 # print(sortDict)
 
-freq_words = heapq.nlargest(3, word2count, key=word2count.get)
+freq_words = heapq.nlargest(4, word2count, key=word2count.get)
 
 #print('\nThe freq words:')
 # print(freq_words)

@@ -4,16 +4,17 @@ const CloudConvert = require('cloudconvert');
 const path = require('path');
 
 // Tair
-const api_key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNWEyNWU3OGU1NmI5ZmRhYmNmZDQwYWMyM2U0MmYzN2QzYmFmMzZkNGU0OGU1ZjcwMThlMjQ1ZGU0YzRkMGM0MjliNzMwNGVlZjUzOTkyYzQiLCJpYXQiOjE2NDc4OTQ5NzkuODk0MjMyLCJuYmYiOjE2NDc4OTQ5NzkuODk0MjMzLCJleHAiOjQ4MDM1Njg1NzkuODg5OTY1LCJzdWIiOiI1Njg5NDI2NSIsInNjb3BlcyI6WyJ1c2VyLnJlYWQiLCJ1c2VyLndyaXRlIiwicHJlc2V0LndyaXRlIiwicHJlc2V0LnJlYWQiLCJ0YXNrLnJlYWQiLCJ0YXNrLndyaXRlIiwid2ViaG9vay5yZWFkIiwid2ViaG9vay53cml0ZSJdfQ.QerdCk1lS6cuM8yQhRF5xFJCSu0drvrECcJca5W58k221xtFgBqbABZn-KvVM-X4r-0CFWwv19Dzg1UmIHXqoEKvk9km8jT5l4sjsGhiIzdNYn6GKsyGPqDyWTk-APWoBoMy3kOND3UuuEEZcYOgb0vbqPUK6mCVPeWAfoXAjKuCERyz5uGlslKD7GIpOWe6acdNiBF6iHMKlvynv5XkqPl6EnNI85G-1u0pE7UpBIsSDSZiroNh08TsQhwHjTS6nUH_yhmMzR75gPfyNxLw0aE426EjpJgaesVujJ3UATYMYYbxetyWN63cz-VJcL1dlsliolfUnKgdimTFoB9bg9WEw1mzU4tgmNYgn7s58073L1unSm8Y1nHFwe23jQd-aIxsjpdSVI73WRhdNMdDdX9hRyOjbxG9LLkJwusOcntXQLahqqPw0JYMmUkU2eoNzGIaBKpLw5z5f6iF8FLhiE4Hw4DV8a44fPUBgNWyGuofaxIfTdY16_7zC4teKNPq5PDI444sgwX0Hk_epHL2wXKuwDf-o6pZehVAATL8hTbrrgUn95zvrsbmW6xpW5rvW9YSTGpoTGTaU5_2LfdM1nJoXf9KqHkWP9NqUbPRJdjoyxQ-XIdhB-42eFwR1orhkrpIUGuApB0F_cyU2QWalP7OazpeL-WMTwIp-hoS16Y';
+const api_key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiM2JiODY0N2NhNzMzMGI1NmMyMjQ2N2UyNTAwYjBhZWFiYmFkN2U0Y2I4ODQ5YTRjYWRkN2RjZGQ1ZWM4OTVhNmIwYTE0ZmJkODdlNDczNjIiLCJpYXQiOjE2NTI5OTE4MDguMjk3NjUsIm5iZiI6MTY1Mjk5MTgwOC4yOTc2NTIsImV4cCI6NDgwODY2NTQwOC4yOTM5ODQsInN1YiI6IjU2ODk0MjY1Iiwic2NvcGVzIjpbInVzZXIucmVhZCIsInVzZXIud3JpdGUiLCJ0YXNrLnJlYWQiLCJ0YXNrLndyaXRlIiwid2ViaG9vay5yZWFkIiwid2ViaG9vay53cml0ZSIsInByZXNldC5yZWFkIiwicHJlc2V0LndyaXRlIl19.p9GkR82AX7wh7u8znjVJNsACEHd-XeBnkK1LJUm_4y_QCMgi8U7cBqYekYp7vvJjBV4aqcRrGr6LdH4taTy1gSZPRy7YdOEAoNgZu5YH1yGZAwDmeXLPXwS2A1GfEXM8r29CyFMjwZgLNnODPpQy4nQKib881S1jseIP0wrt5el6wS55zxC4CvUSVyu_6yXFh8eXySeKR058enUaQXf1JaqRj_gp3snHhEJFyPXA07cxf4olQsyovhfsuijGryvm0s-r4nb-o3HN5NzB25eZZZ3CzVhCQX1NfEAwnX_Iv3x2IA7Boqe6ZX0g3n7432PQ5QnlSVj9f7FmE2i9eQmUZd2p8ctKWd7la6Zw18fsb5g2IiEF9mtZKSemoDsPnpsl_thTDpvqUmHpBSvOS_6z7jOYPEkbvHmjZh9QQtMtQ0D5L-qoTC8FLZ5rEPDnDEc2MnMxqtp0Uj800CX8-OP2NCxzeYyLVgoSCGYjDbHcvnLZoPWOPK327URyT3bakHIzlpBVG0YfmsQ0rbjhoCEVRN849ITMSN3HIRR35uBRH-p4q2RmNpKweZc9t3gQieTf_r0y3-fDTRKHEA1ZDpAbQ645C89brQr9QaBP8_5LoJyPMxO5ahBIdNCDukS87g0y24ECm42exl3N8o8_RD295rBzPdb7j4ZXzbF7bsv5mv4'
 
 //Moran
-//const api_key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMWJiZDc5OTVmMTZkNzBlMzkxNDQ5NWViMGVhYzg1OGU2MWM0MjM4N2IzMzEzZmU4MjhkZWEyN2M0NzU2NTFjMjY1MzcwMWU3ZmM4MjgxNDciLCJpYXQiOjE2NDg1MDQ3MjAuNTcwMzE0LCJuYmYiOjE2NDg1MDQ3MjAuNTcwMzE1LCJleHAiOjQ4MDQxNzgzMjAuNTY2MTI4LCJzdWIiOiI1NzAzOTA1MyIsInNjb3BlcyI6WyJ1c2VyLnJlYWQiLCJ1c2VyLndyaXRlIiwidGFzay5yZWFkIiwidGFzay53cml0ZSIsIndlYmhvb2sucmVhZCIsIndlYmhvb2sud3JpdGUiLCJwcmVzZXQucmVhZCIsInByZXNldC53cml0ZSJdfQ.WRnWVso0IKKypKv-70KEEn-Gf1pDneGvLygJTTF1Y9VLRTwaJecQyJGbiczgmThH_PiXgkkYCe7WczbRuDMvWUMndFO9dnsL36Ed62ijYO3wm1KqQsKtJCqURoE-KHasXW4TifY6_SJM1JQjBwUdrJd_KCdL0F21KkHDcWgrNjKZLnccHY7xpukJ_bns30lgQ24cCrcuoGDErumL-e4B9vFsjMipKwNLEzJMimDFUqZX1r4V_D4M9TAjP33As15L-3ezvKavqpSoPRJQipeNImCnTSPqZV1-5xoE1NYMt9SuqmsWUHAuk3Xs8FB3wuSNFR2WcVbozneVVyiiH-J_07o9hFPcSMr-jQIZXl4I7RL_Kl044AtE7H6hqCDTcF6k9SFdTGtA2QaETfDjvwhc1JOrGQdqiqQEcPiTkBb2-aI-pvVAdvnRIchgKccsSXkukaMuxJG0Tni2H3Znsd2CKKr6tixQ6oZBRIcWevHm9paTBPQK6WE-RLK4DjtWaMUDzdwz_9zADd4LDlHYW76Qmn9eOgaF9nhh507ibTK2oU_lP6JsGzjBka1m3xDrVdTy3ZY5m1f3_p1xYkvbcSugXr55_3CUVxTO8LPwR1-_l87kTIl1B39S44E5otO6Dyn6BmlHDTIty99J5EAHA1EZrG2IPeK8m4gnvldWrzxXfSc';
+//const api_key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZGNhNjU1NGVlYzgwNGM1ZWIyNjNmNzA3M2I0NGY3YTE2ZjM2MzgxYzgxZWRhZTZjNjVjYTEzZTVkOTUxMDFjZGMzNmVjMzhiNzQ2N2ZiYzQiLCJpYXQiOjE2NTI5ODg4ODguNzQwODU5LCJuYmYiOjE2NTI5ODg4ODguNzQwODYzLCJleHAiOjQ4MDg2NjI0ODguNzI4MTYzLCJzdWIiOiI1NzAzOTA1MyIsInNjb3BlcyI6WyJ1c2VyLnJlYWQiLCJ1c2VyLndyaXRlIiwidGFzay5yZWFkIiwidGFzay53cml0ZSIsIndlYmhvb2sucmVhZCIsIndlYmhvb2sud3JpdGUiLCJwcmVzZXQud3JpdGUiLCJwcmVzZXQucmVhZCJdfQ.S32gW0vDGopMh-RzqZeajAUAoKftMU4m4s1Of-mKpu-RrQXcUqkr034PhQWhFm4PKasCOyld7D8UWICoHttpDI2Ju7gGBQJXdAy4q4_U1MEYAkyyKFY6USdO4GHsUS_aOXocoKtOgAN-OcNAAUiR8X6h3RCYD0gjiK3BLZh_ot2ftEbstQNZPeB4JUvVTmDQd3SjI74LQYGxP2BpTIkMZN-Mk-kbzYcf4_szrJGiDRx4FCLNn7Mm-Piyry8-bugVa4mp0Uuw3AUB2ScO_X40gLPa1yt-SpSWLwev71hpT97YE3XbKD8JOp_iDgEsw50XJhnQ-_E1TrcxSglFZpZf8s1nFqAIAvBt-xdjkbZRkFBdKzhATCj0XyE7Tl-GlYWuAIiJqxL6baykpiLcHVr587C923so6sW67l6GM-7R97jfNCSspmKJ7-WPE5RkgbfZmFOtFubqLV3OVJD5Mmfih-vx042ShAih60BH3zzQrBB-Me_OzZ-nJjwKHSaTaoCbwvoExsunaajPC5oQvDlE7bNrhZS4A7kljvKy914mnOdck3V6xyipxXJtaVbhAtWMV4TzogzeX4lZqIxqgnMHKjX2-UbdwrTApLaxh321As2pod17mzsTzpOm5rAmzq-sfxvG4-J2er-UxW2FRUFAiZV8SSUlEkS779XFStxbI84'
 
 const cloudConvert = new CloudConvert(api_key);
 
 async function output(fileName) {
+    //async function output() {
 
-    let job = await cloudConvert.jobs.create({
+    var job = await cloudConvert.jobs.create({
         tasks: {
             'import-my-file': {
                 operation: 'import/upload',
@@ -47,21 +48,17 @@ async function output(fileName) {
     // Create upload task 
     const uploadTask = job.tasks.filter(task => task.name === 'import-my-file')[0];
 
-    console.log(uploadTask)
-
-    //const importPath = path.join(__dirname, `./uploads/${fileName}`) // take the file from this path
-    const importPath = path.join(__dirname, `./test.pptx`) // take the file from this path
+    const importPath = path.join(__dirname, `./uploads/${fileName}`) // take the file from this path
+    //const importPath = path.join(__dirname, './OP.pptx') // take the file from this path
 
     //const inputFile = fs.createReadStream('./uploads/example.pptx');
     const inputFile = fs.createReadStream(importPath);
     //const inputFile = fs.createReadStream(`./uploads/${fileName}`);
 
     //console.log(inputFile);
-
-
     // Upload the presentation 
-    //await cloudConvert.tasks.upload(uploadTask, inputFile, `${fileName}`);
-    await cloudConvert.tasks.upload(uploadTask, inputFile, './test.pptx');
+    await cloudConvert.tasks.upload(uploadTask, inputFile, `${fileName}`);
+    //await cloudConvert.tasks.upload(uploadTask, inputFile, 'OP.pptx');
 
 
     //convert
@@ -70,7 +67,7 @@ async function output(fileName) {
 
 
     // Download
-    //job = await cloudConvert.jobs.wait(job.id); // Wait for job completion
+    job = await cloudConvert.jobs.wait(job.id); // Wait for job completion
 
     const exportTask = job.tasks.filter(task => task.operation === 'export/url' && task.status === 'finished')[0];
 
@@ -82,8 +79,10 @@ async function output(fileName) {
             //let writeStream = fs.createWriteStream('./slidsPic/' + filename);
             //let writeStream = fs.createWriteStream('../client/my-app/src/comps/showChange/slidePic/' + filename);
 
-            //const pathToDownload = path.join(__dirname, `../client/my-app/src/comps/showChange/slidePic`) // take the file from this path
-            let writeStream = fs.createWriteStream('../client/my-app/src/comps/showChange/slidePic/' + filename);
+            const pathToDownload = path.join(__dirname, `../client/my-app/src/comps/showChange/slidePic/`) // download the file to this path
+
+            //let writeStream = fs.createWriteStream('../client/my-app/src/comps/showChange/slidePic/' + filename);
+            let writeStream = fs.createWriteStream(pathToDownload + filename);
 
             https.get(fileUrl, (res) => {
                 res.pipe(writeStream);
@@ -108,7 +107,7 @@ async function output(fileName) {
     return files;
 }
 
-output('updated-test.pptx');
+//output('test.pptx');
 
 
 // // Download
@@ -134,4 +133,4 @@ output('updated-test.pptx');
 
 
 
-//odule.exports = { output };
+module.exports = { output };

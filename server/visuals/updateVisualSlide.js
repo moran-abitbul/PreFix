@@ -1,7 +1,8 @@
 const fix = require('./fixContrast');
 const PPTX = require('er-nodejs-pptx');
 const path = require('path');
-const extantion = require('../extensions/getPicUrl')
+const getPicFile = require('../extensions/getPicUrl')
+const getVideoFile = require('../extensions/getVideoUrl')
 const checkValid = require('./checkValidTextSlide')
 const changeString = require('./changeStringToBullet')
 
@@ -16,14 +17,17 @@ const start = async (fileName) => {
     const pre = await pptx.load(filePath);
 
     const slidesNum = pre.presentation.content['ppt/presentation.xml']['p:presentation']['p:sldIdLst'][0]['p:sldId'].length;
+    var counterWithoutPic = 0;
 
-    // go through all the slides 
-    //for (let i = 1; i < slidesNum + 1; i++) {
-    for (let i = 3; i < 4; i++) {
+    //text of all the slides 
+    const slidesText = new Array();
+
+    //go through all the slides 
+    for (let i = 1; i < slidesNum + 1; i++) {
+        //for (let i = 3; i < 4; i++) {
 
         console.log('start with slide - ' + i);
         var newColorText = new Array();
-        var counterWithoutPic = 0;
 
         var withPic = pre.getSlide(i).checkPic();
         if (!withPic) { counterWithoutPic++; } //count for slides without pic
@@ -34,30 +38,53 @@ const start = async (fileName) => {
             var textArray = pre.getSlide(i).getArrText(); //textArray[0] --> string, textArray[1] --> properties
             var isAValidText = checkValid.checkValidText(textArray)
 
+            //get text of slide
+            var slideText = '' //create string for get pic 
+            //for (text of textArray[0]) {    
+            // slideText += text.join(' ')
+            // slideText += ' '
+            //}         
+
+            for (textIndex in textArray[0]) {
+
+                if (textIndex != 0) {
+                    slideText += textArray[0][textIndex].join(' ')
+                    slideText += ' '
+                }
+            }
+
+            //add slide text to array of slides
+            slidesText.push(slideText)
+
             //change the text if it not valid  
             if (!isAValidText) {
                 var newTextArray = changeString.changeText(textArray)
                 pre.getSlide(i).setArrText(newTextArray, textArray[1]);
             }
+
+            //get title of the slide
+            var slideTitle = '' //title of this slide
+            if (typeof (textArray[0][0][0]) == 'object') {
+                slideTitle = textArray[0][0][0][0]
+            }
+            else if (typeof (textArray[0][0][0]) == 'strings') {
+                slideTitle = textArray[0][0][0]
+            }
         }
 
-        //add pic to slide
+        //add pic to the slide
         if (counterWithoutPic == 3) {
-            var textSlide = '' //create string for get pic
-            for (text of textArray[0]) {
-                textSlide += text.join(' ')
-            }
-
-            // run this code 
-
             //get pic url from API
-            // picUrl = extantion.getPicFromText(textSlide, 'title').then((url) => {
-            //     return (url.toString('utf8'))
-            // })
+            //bag of word to the slide text-> get freq word -> googleSearch API -> get urlPic
+            var picUrl = await getPicFile.getPicFromText(slideText, slideTitle).then((url) => {
+                return (url.toString('utf8'))
+            })
 
-            await pre.getSlide(1).addImage({
-                //src: picUrl
-                src: 'https://media.geeksforgeeks.org/wp-content/cdn-uploads/Semaphores_1.png',
+            console.log(picUrl);
+
+            //add picture to the slide
+            await pre.getSlide(i).addImage({
+                src: picUrl,
                 x: 600,
                 y: 310,
                 cx: 350,
@@ -77,13 +104,12 @@ const start = async (fileName) => {
 
         let valColorText = await getValColor(backgroundColor, colorText);
         console.log(valColorText);
-        
+
         //update the background color 
         let updateBackground = await fix.checkContrast(backgroundColor, valColorText).then(array => {
             return array[0]; //colorbackground and text first
         });
         console.log("updateBackground: " + updateBackground);
-
 
         // create new color text for update the slide
         //if there more then 1 color of text
@@ -96,7 +122,6 @@ const start = async (fileName) => {
             }
         }
 
-
         // change slide
         let slide_i = pre.getSlide(i);
         console.log("change color in slide: " + i);
@@ -107,17 +132,34 @@ const start = async (fileName) => {
                 slide_i.textColorToChange(newColorText[i][j], i, j);
             }
         }
-
     }
 
+    // add video to the last slide and offers more videos to the client
+    // getVideoUrl(slidesText).then((videosUrlArr) => {
+    //     //add video to the last slide
+    //     await pre.getSlide(i).addImage({
+    //         src: videosUrlArr[0],
+    //         x: 600,
+    //         y: 310,
+    //         cx: 350,
+    //     });
+    // })
 
     pre.save(fileSavePath);
     console.log("saved");
 
     return fileSaveName;
-
 }
 
+const getVideoUrl = (slidesText) => {
+    // var videoUrl = await getVideoFile.getVideoFromText(slideText, slideTitle).then((url) => {
+    //     return (url.toString('utf8'))
+    // })
+}
+
+
+
+//get the text color value with the lowest ratio (with the backgroundColor)
 const getValColor = async (backgroundColor, colorText) => {
     //min contrast
     var tempColorText = null

@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 //get data from api to test for contrast
-const getVideoFromText = (search_query) => {
+const getVideoFromText = async (search_query) => {
     var api_key = 'f09834b970abc1d46e74ddcf046cb41dde0a4feef039268388ae5cd24a3d9746'
 
     //sp = CAMSAhgB = < 4 min and num views
@@ -40,5 +40,5 @@ const getVideoFromText = (search_query) => {
         })
 }
 
-getVideoFromText('semaphore operating system')
-//module.exports = { getVideoFromText };
+//getVideoFromText('semaphore operating system')
+module.exports = { getVideoFromText };
