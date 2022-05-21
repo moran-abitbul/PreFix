@@ -6,7 +6,6 @@ const getImageFromText = (q, tbs) => {
     var api_key_Tair = 'f09834b970abc1d46e74ddcf046cb41dde0a4feef039268388ae5cd24a3d9746'
     var api_key_Moran = 'cd4b5139093c60254da1593baef560d93e06ff9fdc86777a2ac1f84d2ada9ce4'
 
-
     //tbs = ic: specific % 2Cisc: blue - specific color
 
     tbs = tbs.replaceAll(' ', '') // remove all spaces from string 

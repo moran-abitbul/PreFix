@@ -23,8 +23,8 @@ const start = async (fileName) => {
     const slidesText = new Array();
 
     //go through all the slides 
-    //for (let i = 1; i < slidesNum + 1; i++) {
-    for (let i = 1; i < 4; i++) {
+    for (let i = 1; i < slidesNum + 1; i++) {
+        //for (let i = 1; i < 4; i++) {
 
         console.log('start with slide - ' + i);
         var newColorText = new Array();
