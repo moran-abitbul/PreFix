@@ -24,7 +24,7 @@ const start = async (fileName) => {
 
     //go through all the slides 
     for (let i = 1; i < slidesNum + 1; i++) {
-        //for (let i = 5; i < 8; i++) {
+        //for (let i = 1; i < 4; i++) {
 
         console.log('start with slide - ' + i);
         var newColorText = new Array();
@@ -195,6 +195,6 @@ const printXml = async () => {
 }
 //printXml();
 
-start("test.pptx");
-//module.exports = { start }
+//start("test.pptx");
+module.exports = { start }
 
