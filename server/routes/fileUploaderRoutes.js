@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router()
 const multer = require('multer');
 const picName = require('../getArrayPicName')
-const presData = require('../getPresDate');
+const presData = require('../getPresData');
 const PresentationModel = require('../models/PresentationModel')
 
 router.use(function (req, res, next) {
