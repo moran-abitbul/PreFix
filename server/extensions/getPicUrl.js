@@ -1,10 +1,15 @@
 const picUrlFile = require('./getPicUrlApi')
 const spawn = require('child_process').spawn
+const path = require('path');
 
 // Get text and title --> run BOW in python file --> get the frequency words --> return pic url according them
 const getPicFromText = async (text, title) => {
     return await new Promise((resolve) => {
-        const bagOfWordsFile = spawn('python', ['../nlp/bagOfWord.py', text])
+
+        const BowFilePath = path.join(__dirname, `../nlp/bagOfWord.py`)
+        const bagOfWordsFile = spawn('python', [BowFilePath, text])
+
+        //const bagOfWordsFile = spawn('python', ['../nlp/bagOfWord.py', text])
 
         //get the frequency words of the text from python file
         bagOfWordsFile.stdout.on('data', async (freqWord) => {
