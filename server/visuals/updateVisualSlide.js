@@ -17,14 +17,14 @@ const start = async (fileName) => {
     const pre = await pptx.load(filePath);
 
     const slidesNum = pre.presentation.content['ppt/presentation.xml']['p:presentation']['p:sldIdLst'][0]['p:sldId'].length;
-    var counterWithoutPic = 0;
+    var counterWithoutPic = 2;
 
     //text of all the slides 
     const slidesText = new Array();
 
     //go through all the slides 
-    for (let i = 1; i < slidesNum + 1; i++) {
-        //for (let i = 1; i < 4; i++) {
+    //for (let i = 1; i < slidesNum + 1; i++) {
+    for (let i = 3; i < 4; i++) {
 
         console.log('start with slide - ' + i);
         var newColorText = new Array();
@@ -79,8 +79,7 @@ const start = async (fileName) => {
                 return (url.toString('utf8'))
             })
 
-            console.log(picUrl);
-
+            //var picUrl = "https://media.geeksforgeeks.org/wp-content/cdn-uploads/Semaphores_1.png"
             //add picture to the slide
             await pre.getSlide(i).addImage({
                 src: picUrl,
@@ -90,6 +89,7 @@ const start = async (fileName) => {
             });
 
             counterWithoutPic = 0;
+            console.log("counterWithoutPic = 0");
         }
 
         //original background color

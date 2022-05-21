@@ -1,6 +1,7 @@
 import React from 'react';
-import logoImage from './PreFixLogo.jpeg';
-import bgImage from './PreFixBG.jpeg';
+import logo from './logo-r.png';
+import aboutUs from './about-us-mimosaa-collection.png';
+import bgImage from './pres-prefix.PNG';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -39,36 +40,30 @@ function HomePage() {
     return (
         <div className="home">
 
-            <Navbar bg="light" variant="dark">
-                <Container>
-                    <Navbar.Brand>
-                        <img
-                            src={logoImage}
-                            width="120"
-                            height="80"
-                            // className="d-inline-block align-top"
-                            alt=""
-                        />{' '}
-                        {/* <h1>PreFix</h1> */}
-                    </Navbar.Brand>
-                </Container>
-            </Navbar>
+            <a href="https://moranabitbul1.wixsite.com/prefix">
+                <img src={aboutUs} className="aboutUs" alt="about-us" />
+            </a>
 
+            <img src={logo} className="logo" alt="logo" />
 
-            <h1>PreFix</h1>
-            <h2>Turning a textual presentation into an interactive one</h2>
-
-            <img src={bgImage} className="bgImage" alt="Logo" />
+            <img src={bgImage} className="bgImage" alt="bg" />
 
             <br />
             <br />
             <br />
+            <Button className='buttonStart' variant="contained" size="large" disabled={checked === false} onClick={() => checkStart()} >START</Button>
+            <br />
+            <br />
+            <span className="agree">
+                <a className="text-agree">קראתי והסכמתי לתקנון של האתר</a>
+                <FormControlLabel className="btn-agree" control={<Checkbox required={true} onChange={(e) => setChecked(e.currentTarget.checked)} />} />
+            </span>
 
-            <h3>Terms</h3>
+
+
+            {/* <h3>Terms</h3> */}
             {/* <h5>אתם מתחייבים לכך שיעשה שימוש במצגות לצורך למידה של דוגמאות </h5> */}
-
-            <FormControlLabel control={<Checkbox required={true} onChange={(e) => setChecked(e.currentTarget.checked)} />} label="I agree" />
-
+            {/* <FormControlLabel control={<Checkbox required={true} onChange={(e) => setChecked(e.currentTarget.checked)} />} className="agree" label="קראתי והסכמתי לתקנון של האתר" /> */}
             {/* <Link to="/fileUploader">
                 <Stack spacing={10} direction="center">
                     <Button className='buttonStart' variant="contained">Start</Button>
@@ -79,18 +74,19 @@ function HomePage() {
                 <button>הנני מסכים לתנאים</button>
             </Link> */}
 
-            <br />
-            <br />
-
-            <br />  
-
 
             {/* this is history push
              <Link to="/fileUploader">
                 <Button className='buttonStart' variant="contained" size="large" disabled={checked === false} onClick={(e) => checkStart()} >Start</Button>
             </Link> */}
 
-            <Button className='buttonStart' variant="contained" size="large" disabled={checked === false} onClick={() => checkStart()} >Lets start</Button>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
 
         </div>
     )

@@ -84,6 +84,7 @@ export const FileUploader = ({ setPicArray }) => {
                             multiple="#"
                             required={true} />
                     </div>
+                    <br />
                     <button type="submit" > Start </button>
                     {/* <Button className='buttonStart' variant="contained" size="large" disabled={file === null} > Start</Button> */}
                 </form>}
