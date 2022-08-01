@@ -1,3 +1,67 @@
+const largestSum = (numbers) => {
+
+    //break point
+    if (numbers.length == 0) {
+        return 0
+    }
+
+    listA = remove2elem(numbers)//remove the first two elements
+    listB = remove1elem(numbers)//remove the first element
+
+    sum1 = numbers[0] + largestSum(listA)
+    sum2 = largestSum(listB)
+
+    var largeSum = sum1 > sum2 ? sum1 : sum2
+    return largeSum
+}
+
+//remove the first element
+const remove1elem = (numbers) => {
+    list = []
+    for (let i = 1; i < numbers.length; i++) {
+        list.push(numbers[i])
+    }
+    return list
+}
+
+//remove the first two elements
+const remove2elem = (numbers) => {
+    list = []
+    for (let i = 2; i < numbers.length; i++) {
+        list.push(numbers[i])
+    }
+    return list
+}
+
+//sum = largestSum([2, 4, 6, 2, 5])
+//sum = largestSum([5, 1, 1, 5])
+//console.log(sum)
+
+
+// bg = '000000'
+// newBg = 'ffffff'
+
+// var colorMap = new Map();
+// colorMap.set(bg, newBg);
+
+// if (!colorMap.has(bg)) {
+
+//     console.log('this color not exist in the map')
+// }
+// else {
+//     //use this color
+//     console.log(colorMap.get(bg))
+// }
+
+//console.log(colorMap)
+//console.log(colorMap.has('000000'))
+
+
+
+
+// beginning
+
+
 const fix = require('./fixContrast');
 const PPTX = require('er-nodejs-pptx');
 const path = require('path');
@@ -5,6 +69,13 @@ const getPicFile = require('../extensions/getPicUrl')
 const getVideoFile = require('../extensions/getVideoUrl')
 const checkValid = require('./checkValidTextSlide')
 const changeString = require('./changeStringToBullet')
+
+//for json file - match color 
+const { JSDOM } = require("jsdom");
+const { window } = new JSDOM("");
+const $ = require("jquery")(window);
+var fs = require('fs');
+
 
 let pptx = new PPTX.Composer();
 
@@ -75,23 +146,22 @@ const start = async (fileName) => {
         if (counterWithoutPic == 3) {
             //get pic url from API
             //bag of word to the slide text-> get freq word -> googleSearch API -> get urlPic
-            var picUrl = await getPicFile.getPicFromText(slideText, slideTitle).then((url) => {
-                return (url.toString('utf8'))
-            })
-            console.log("picUrl --> " + picUrl);
+            // var picUrl = await getPicFile.getPicFromText(slideText, slideTitle).then((url) => {
+            //     return (url.toString('utf8'))
+            // })
+            //console.log("picUrl --> " + picUrl);
 
             var picUrl = "https://media.geeksforgeeks.org/wp-content/cdn-uploads/Semaphores_1.png"
             //add picture to the slide
-            // await pre.getSlide(i).addImage({
-            //     src: picUrl,
-            //     x: 600,
-            //     y: 310,
-            //     cx: 350,
-            // });
+            await pre.getSlide(i).addImage({
+                src: picUrl,
+                x: 600,
+                y: 310,
+                cx: 350,
+            });
 
             counterWithoutPic = 0;
         }
-
 
         //original background color
         let backgroundColor = pre.getSlide(i).getBackgroundColor();
@@ -103,12 +173,29 @@ const start = async (fileName) => {
         console.log(colorText);
 
         let valColorText = await getValColor(backgroundColor, colorText);
-        console.log(valColorText);
+        //console.log(valColorText);
 
-        //update the background color 
-        let updateBackground = await fix.checkContrast(backgroundColor, valColorText).then(array => {
-            return array[0]; //colorbackground and text first
+        var updateBackground = ''
+        //check if there is a match for this color
+        await checkMatchColor(backgroundColor).then(async (matchColor) => {
+            console.log('matchColor of bg --> ' + matchColor);
+            if (matchColor == -1) {
+                //update the background color 
+                updateBackground = await fix.checkContrast(backgroundColor, valColorText).then(array => {
+                    return array[0]; //colorbackground and text first
+                });
+                //to insert colors to json file
+                var obj = {
+                    table: []
+                };
+                obj.table.push({ color: backgroundColor, matchColor: updateBackground });
+                var json = JSON.stringify(obj);
+                fs.writeFile('colors.json', json, (err) => { if (err) { console.error(err); return; } })
+            } else {
+                updateBackground = matchColor
+            }
         });
+
         console.log("updateBackground: " + updateBackground);
 
         // create new color text for update the slide
@@ -116,8 +203,27 @@ const start = async (fileName) => {
         for (let j = 0; j < colorText.length; j++) { //num of shape
             newColorText[j] = new Array();
             for (let k = 0; k < colorText[j].length; k++) { //num of row text in one shape
-                await fix.textContrast(updateBackground, colorText[j][k]).then(colorText => {
-                    newColorText[j].push(colorText)
+
+                await checkMatchColor(colorText[j][k]).then(async (matchColor) => {
+                    console.log('length of j:' + colorText[j].length);
+                    console.log('colorText j k --> ' + colorText[j][k]);
+
+                    console.log('matchColor of txt--> ' + matchColor);
+                    if (matchColor == -1) {
+                        await fix.textContrast(updateBackground, colorText[j][k]).then(colorText => {
+                            newColorText[j].push(colorText)
+                            //to insert colors to json file
+                            var obj = {
+                                table: []
+                            };
+                            obj.table.push({ color: colorText[j][k], matchColor: colorText });
+                            var json = JSON.stringify(obj);
+                            fs.writeFile('colors.json', json, (err) => { if (err) { console.error(err); return; } })
+                        });
+                    } else {
+                        console.log('in else- yes match color')
+                        newColorText[j].push(matchColor)
+                    }
                 });
             }
         }
@@ -135,11 +241,11 @@ const start = async (fileName) => {
     }
 
     // add video to the last slide and offers more videos to the client
-    let videoUrl = await getVideoUrl(slidesText).then(url => {
-        return url
-    });
+    // let videoUrl = await getVideoUrl(slidesText).then(url => {
+    //     return url
+    // });
 
-    console.log("videoUrl ---> " + videoUrl);
+    //console.log("videoUrl ---> " + videoUrl);
 
     pre.save(fileSavePath);
     console.log("saved");
@@ -180,6 +286,29 @@ const getValColor = async (backgroundColor, colorText) => {
     return tempColorText
 }
 
+const checkMatchColor = async (color) => {
+    return new Promise((resolve, reject) => {
+
+        //if the color is exist- get the match color
+        fs.readFile('colors.json', 'utf8', (error, data) => {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            var jsonData = JSON.parse(data);
+            //console.log(jsonData['table'][0]['color']);
+
+            $(jsonData['table']).filter(function (index, item) {
+                if (item.color == color) {
+                    console.log(item.matchColor);
+                    resolve(item.matchColor)
+                }
+            });
+            resolve(-1);
+        })
+    })
+}
+
 const printXml = async () => {
     const filePath = path.join(__dirname, `../uploads/check.pptx`);
     const pre = await pptx.load(filePath);
@@ -218,5 +347,9 @@ const getVideoUrlT = (slidesText) => {
 
 //getVideoUrlT(text)
 
-//start("test.pptx");
-module.exports = { start }
+start("test.pptx");
+//module.exports = { start }
+
+
+
+
