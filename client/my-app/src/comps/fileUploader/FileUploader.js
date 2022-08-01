@@ -53,12 +53,9 @@ export const FileUploader = ({ setPicArray }) => {
                 //Set the pic array to show
                 setPicArray(res.data)
 
-
                 //Set the name of the update file
                 window.localStorage.setItem('updatedFile', `updated-${file.name}`); //update the updated file for downloadFile component 
-
-                // console.log('after get pic array')
-                console.log('in file route: after history:')
+ 
                 console.log(res.data)
 
                 history.push("/showChange");

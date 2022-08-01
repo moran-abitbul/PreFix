@@ -7,38 +7,43 @@ const getVideoFromText = async (search_query) => {
     //sp = CAMSAhgB = < 4 min and num views
     console.log("q: " + search_query);
 
-    axios
-        .get(`https://serpapi.com/search.json?engine=youtube&search_query=${search_query}&tbm=vid&sp=CAASBBABGAE%253D&api_key=${api_key}`)
-        .then(res => {
-            console.log(res.data.video_results)
+    return new Promise((resolve) => {
+        axios
+            .get(`https://serpapi.com/search.json?engine=youtube&search_query=${search_query}&tbm=vid&sp=CAASBBABGAE%253D&api_key=${api_key}`)
+            .then(res => {
+                //console.log(res.data.video_results)
 
-            var videoArr = res.data.video_results
-            //console.log("before sort:" + videoLength)
+                var videoArr = res.data.video_results
 
 
-            videoLength = videoArr.map(element => element.length);
-            videoViews = videoArr.map(element => element.view);
+                videoLength = videoArr.map(element => element.length);
+                console.log("before sort:" + videoLength)
 
-            const getNumber = time => +time.replace(/:/g, '')
+                videoViews = videoArr.map(element => element.view);
 
-            //sort by length
-            videoArr.sort((a, b) => {
-                return getNumber(a.length) - getNumber(b.length)
+                const getNumber = time => + time.toString().replace(/:/g, '')
+
+                //sort by length
+                videoArr.sort((a, b) => {
+                    return getNumber(a.length) - getNumber(b.length)
+                })
+
+                //sort by views num
+                videoArr.sort((a, b) => {
+                    return getNumber(a.views) - getNumber(b.views)
+                })
+
+                var videoLength = videoArr.map(element => element.length);
+                console.log("after sort:" + videoLength)
+
+                resolve(videoLength)
+
+            }).catch(err => {
+                console.error(err)
             })
 
-            //sort by views num
-            videoArr.sort((a, b) => {
-                return getNumber(a.views) - getNumber(b.views)
-            })
-
-            videoLength = videoArr.map(element => element.length);
-            //console.log("after sort:" + videoLength)
-
-            //resolve(res.data.video_results)
-        }).catch(err => {
-            console.error(err)
-        })
+    })
 }
 
-//getVideoFromText('semaphore operating system')
-module.exports = { getVideoFromText };
+getVideoFromText('semaphore operating system')
+//module.exports = { getVideoFromText };

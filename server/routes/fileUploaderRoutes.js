@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router()
 const multer = require('multer');
 const picName = require('../getArrayPicName')
-const presData = require('../getPresDate');
+const presData = require('../getPresData');
 const PresentationModel = require('../models/PresentationModel')
 
 router.use(function (req, res, next) {
@@ -77,9 +77,8 @@ router
                             console.log('after save to db, and now send picArr ');
                             arrayOfPicNamesAfter().then((picArr) => {
                                 console.log(picArr);
-                                console.log('after send pic to client');
                                 res.send(picArr)
-
+                                //console.log('after send pic to client');
                             })
                         })
                         .catch(err => console.log(err))

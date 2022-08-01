@@ -9,8 +9,9 @@ import MultiCheckBox from '../multiCheckBox/MultiCheckBox'
 import "./showChange.css";
 
 
-function ShowChange({ picArray }) {
 
+function ShowChange({ picArray }) {
+    
     const [picsArray, setPicsArray] = useState(picArray);
 
     console.log('in showChange: picsArray')
@@ -53,7 +54,7 @@ function ShowChange({ picArray }) {
 
             {/*shown the pic array  */}
             {/* change picsArray!!!!!!!!!!!!!!!!!!!!! */}
-            {picsArray !== undefined && <Carousel style={{ alignItems: 'center' }} itemPadding={[60, 200]} itemsToScroll={3} itemsToShow={3} >
+            {picsArray !== undefined && <Carousel style={{ alignItems: 'center' }} itemPadding={[60, 200]} itemsToScroll={3} itemsToShow={3}>
 
                 {picsArray.map((picSrc) => {
                     return (<div>

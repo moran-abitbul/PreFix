@@ -22,9 +22,12 @@ const start = async (fileName) => {
     //text of all the slides 
     const slidesText = new Array();
 
+    //hashMap to store the colors before and after the changes, and save time of check
+    var ColorMap = new Map();
+
     //go through all the slides 
-    for (let i = 1; i < slidesNum + 1; i++) {
-        //for (let i = 1; i < 4; i++) {
+    //for (let i = 1; i < slidesNum + 1; i++) {
+    for (let i = 1; i < 2; i++) {
 
         console.log('start with slide - ' + i);
         var newColorText = new Array();
@@ -75,11 +78,13 @@ const start = async (fileName) => {
         if (counterWithoutPic == 3) {
             //get pic url from API
             //bag of word to the slide text-> get freq word -> googleSearch API -> get urlPic
-            var picUrl = await getPicFile.getPicFromText(slideText, slideTitle).then((url) => {
-                return (url.toString('utf8'))
-            })
 
-            //var picUrl = "https://media.geeksforgeeks.org/wp-content/cdn-uploads/Semaphores_1.png"
+            // var picUrl = await getPicFile.getPicFromText(slideText, slideTitle).then((url) => {
+            //     return (url.toString('utf8'))
+            // })
+
+
+            var picUrl = "https://media.geeksforgeeks.org/wp-content/cdn-uploads/Semaphores_1.png"
             //add picture to the slide
             await pre.getSlide(i).addImage({
                 src: picUrl,
@@ -90,7 +95,6 @@ const start = async (fileName) => {
 
             counterWithoutPic = 0;
         }
-
 
         //original background color
         let backgroundColor = pre.getSlide(i).getBackgroundColor();
@@ -109,6 +113,13 @@ const start = async (fileName) => {
             return array[0]; //colorbackground and text first
         });
         console.log("updateBackground: " + updateBackground);
+
+
+        
+        //add the background color before and after the change
+        ColorMap.set(backgroundColor, updateBackground)
+        //insert bg and colorText ??
+
 
         // create new color text for update the slide
         //if there more then 1 color of text
@@ -150,8 +161,8 @@ const start = async (fileName) => {
     return fileSaveName;
 }
 
-const getVideoUrl = (slidesText) => {
-    // var videoUrl = await getVideoFile.getVideoFromText(slideText, slideTitle).then((url) => {
+const getVideoUrl = async (slidesText) => {
+    // var videoUrl = await getVideoFile.getVideoFromText(slidesText).then((url) => {
     //     return (url.toString('utf8'))
     // })
 }
