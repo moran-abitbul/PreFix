@@ -11,14 +11,18 @@ const getImageFromText = (q, tbs) => {
     tbs = tbs.replaceAll(' ', '') // remove all spaces from string 
 
     console.log("q: " + q + ", tbs:" + tbs);
+    //TO DO: get color from user
+    color = "blue"
+    tbsColor = "ic:specific%2Cisc:" + color
 
     return new Promise((resolve) => {
         try {
             axios
-                .get(`https://serpapi.com/search.json?engine=google&q=${q}&tbs=${tbs}&tbm=isch&num=10&api_key=${api_key_Moran}`)
+                .get(`https://serpapi.com/search.json?engine=google&q=${q}&tbs=${tbsColor}&tbm=isch&num=10&api_key=${api_key_Moran}`)
                 .then(res => {
                     picDataArray = res.data.images_results
-                    //console.log(picDataArray);
+                    console.log("url pic pic: ------");
+                    console.log(res.data.images_results[0].original);
 
                     resolve(res.data.images_results[0].original)
 

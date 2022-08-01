@@ -21,7 +21,7 @@ const Lightness = (color) => {
         color = "212121"; //Lightness black color
     }
     //let newColor = ColorMath.evaluate("(#" + color + " + #" + numberToLightness + ") ").resultStr;
-    let newColor = ColorMath.evaluate('#' + color + ' >>> 30%').resultStr
+    let newColor = ColorMath.evaluate('#' + color + ' >>> 40%').resultStr
     try{
         return newColor.substring(1, newColor.length);
     } catch (e){

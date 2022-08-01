@@ -8,42 +8,66 @@ const getVideoFromText = async (search_query) => {
     console.log("q: " + search_query);
 
     return new Promise((resolve) => {
-        axios
-            .get(`https://serpapi.com/search.json?engine=youtube&search_query=${search_query}&tbm=vid&sp=CAASBBABGAE%253D&api_key=${api_key}`)
-            .then(res => {
-                //console.log(res.data.video_results)
+        try {
+            axios
+                .get(`https://serpapi.com/search.json?engine=youtube&search_query=${search_query}&tbm=vid&sp=CAASBBABGAE%253D&api_key=${api_key}`)
+                .then(res => {
+                    // console.log(res.data.video_results)
 
-                var videoArr = res.data.video_results
+                    var videoArr = res.data.video_results
+                    //console.log("before sort:" + videoLength)
 
 
-                videoLength = videoArr.map(element => element.length);
-                console.log("before sort:" + videoLength)
+                    const getNumber = time => +time.replace(/:/g, '')
 
-                videoViews = videoArr.map(element => element.view);
+                    //sort by length
+                    videoArr.sort((a, b) => {
 
-                const getNumber = time => + time.toString().replace(/:/g, '')
+                        let a_floatNuumber = parseFloat(a.length);
+                        let b_floatNuumber = parseFloat(b.length);
 
-                //sort by length
-                videoArr.sort((a, b) => {
-                    return getNumber(a.length) - getNumber(b.length)
+                        // console.log("time: " + (a_floatNuumber - b_floatNuumber));
+
+                        // return getNumber(a.length) - getNumber(b.length)
+                        return (a_floatNuumber - b_floatNuumber);
+                    })
+
+                    videoLength = videoArr.map(element => element.length);
+                    console.log("after sort Length:" + videoLength)
+
+                    var arrTopVideoLength = []
+
+                    for (var i = 0; i < videoLength.length; i++) {
+                        let time = videoLength[i].replace(':', '.')
+                        if (time >= 0.15 && time < 1) {
+                            arrTopVideoLength.push(videoArr[i])
+                        }
+
+                    }
+                    console.log("arrTopVideoLength ---> ");
+                    console.log(arrTopVideoLength);
+
+                    //sort by views num
+                    arrTopVideoLength.sort((a, b) => {
+                        let a_floatNuumber = parseFloat(a.views);
+                        let b_floatNuumber = parseFloat(b.views);
+                        //  return getNumber(a.views) - getNumber(b.views)
+                        return (a_floatNuumber - b_floatNuumber);
+                    })
+                    videoViews = arrTopVideoLength.map(element => element.views);
+                    console.log("after sort Views:" + videoViews)
+                    console.log(arrTopVideoLength[videoViews.length - 1]);
+
+                    resolve(arrTopVideoLength[videoViews.length - 1])
                 })
-
-                //sort by views num
-                videoArr.sort((a, b) => {
-                    return getNumber(a.views) - getNumber(b.views)
-                })
-
-                var videoLength = videoArr.map(element => element.length);
-                console.log("after sort:" + videoLength)
-
-                resolve(videoLength)
-
-            }).catch(err => {
-                console.error(err)
-            })
-
+        } catch (err) {
+            console.error(err)
+        }
     })
 }
 
-getVideoFromText('semaphore operating system')
-//module.exports = { getVideoFromText };
+
+
+
+//getVideoFromText('semaphore operating system')
+module.exports = { getVideoFromText };

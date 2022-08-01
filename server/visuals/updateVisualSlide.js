@@ -26,8 +26,8 @@ const start = async (fileName) => {
     var ColorMap = new Map();
 
     //go through all the slides 
-    //for (let i = 1; i < slidesNum + 1; i++) {
-    for (let i = 1; i < 2; i++) {
+    for (let i = 5; i < slidesNum + 1; i++) {
+        //for (let i = 1; i < 2; i++) {
 
         console.log('start with slide - ' + i);
         var newColorText = new Array();
@@ -78,20 +78,19 @@ const start = async (fileName) => {
         if (counterWithoutPic == 3) {
             //get pic url from API
             //bag of word to the slide text-> get freq word -> googleSearch API -> get urlPic
-
-            // var picUrl = await getPicFile.getPicFromText(slideText, slideTitle).then((url) => {
-            //     return (url.toString('utf8'))
-            // })
-
+            var picUrl = await getPicFile.getPicFromText(slideText, slideTitle).then((url) => {
+                return (url.toString('utf8'))
+            })
+            console.log("picUrl --> " + picUrl);
 
             var picUrl = "https://media.geeksforgeeks.org/wp-content/cdn-uploads/Semaphores_1.png"
             //add picture to the slide
-            await pre.getSlide(i).addImage({
-                src: picUrl,
-                x: 600,
-                y: 310,
-                cx: 350,
-            });
+            // await pre.getSlide(i).addImage({
+            //     src: picUrl,
+            //     x: 600,
+            //     y: 310,
+            //     cx: 350,
+            // });
 
             counterWithoutPic = 0;
         }
@@ -115,7 +114,7 @@ const start = async (fileName) => {
         console.log("updateBackground: " + updateBackground);
 
 
-        
+
         //add the background color before and after the change
         ColorMap.set(backgroundColor, updateBackground)
         //insert bg and colorText ??
@@ -145,15 +144,11 @@ const start = async (fileName) => {
     }
 
     // add video to the last slide and offers more videos to the client
-    // getVideoUrl(slidesText).then((videosUrlArr) => {
-    //     //add video to the last slide
-    //     await pre.getSlide(i).addImage({
-    //         src: videosUrlArr[0],
-    //         x: 600,
-    //         y: 310,
-    //         cx: 350,
-    //     });
-    // })
+    let videoUrl = await getVideoUrl(slidesText).then(url => {
+        return url
+    });
+
+    console.log("videoUrl ---> " + videoUrl);
 
     pre.save(fileSavePath);
     console.log("saved");
@@ -162,12 +157,18 @@ const start = async (fileName) => {
 }
 
 const getVideoUrl = async (slidesText) => {
-    // var videoUrl = await getVideoFile.getVideoFromText(slidesText).then((url) => {
-    //     return (url.toString('utf8'))
-    // })
+    console.log("getVideoUrl, text: ");
+    console.log(slidesText.toString());
+    text = slidesText.toString()
+    return new Promise(async (resolve) => {
+        await getVideoFile.getVideoFromText(text).then((url) => {
+            // console.log("res url video: ");
+            // console.log(url.toString('utf8'));
+            resolve(url.toString('utf8'))
+        })
+    })
+
 }
-
-
 
 //get the text color value with the lowest ratio (with the backgroundColor)
 const getValColor = async (backgroundColor, colorText) => {
@@ -205,6 +206,26 @@ const printXml = async () => {
     // console.log("saved");
 }
 //printXml();
+
+text = 'Machine Learning: Allow the computer to learn from examples, Runs on a variety of computational tasks where classic programming is not possible. Supervised Learning. Unsupervised Learning. Reinforcement Learning. ',
+    'Data Set: Data For Learning, Examples - with or without “results”. Occam’s Razor: prefer a simple model if possible. ',
+    'Machine Learning Text Mining Learning Algorithm Text mining for market prediction Conclusions ',
+    'Technology development. Documents go digital: Need to search for information digitally. Strong field, a lot of money, very popular. ',
+    'Generalize to new examples: The ability of the model to properly adapt to previously unseen data. Dimensionality Reduction: Data from a high-dimensional space into a low-dimensional. NLP – Natural Language Processing. '
+
+const getVideoUrlT = (slidesText) => {
+    console.log("getVideoUrl, text: ");
+    console.log(slidesText);
+    getVideoFile.getVideoFromText(slidesText).then((url) => {
+        console.log("url video: ");
+        console.log(url);
+        console.log("res url video: ");
+        console.log(url.toString('utf8'));
+        return (url.toString('utf8'))
+    })
+}
+
+//getVideoUrlT(text)
 
 //start("test.pptx");
 module.exports = { start }
